@@ -23,7 +23,7 @@ const Header = () => {
         <div className="w-full max-w-md flex items-center gap-4">
           <SearchBar />
           <Link href="/cart">
-            <CartIcon count={12} />
+            <CartIcon />
           </Link>
         </div>
       </Container>

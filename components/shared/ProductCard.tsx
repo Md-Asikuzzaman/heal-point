@@ -1,18 +1,30 @@
-import React from "react";
-import { Card, CardContent, CardFooter } from "../ui/card";
+"use client";
+
+import { useCartStore } from "@/store/useCartStore";
 import Image from "next/image";
-import { FaStar } from "react-icons/fa6";
 import Link from "next/link";
+import { FaStar } from "react-icons/fa6";
+import { Card, CardContent, CardFooter } from "../ui/card";
 
 interface Props {
-  id: number;
+  id: string;
   title: string;
   price: number;
   image: string;
-  rating?: number;
+  brand: string;
+  medicineType: string;
+  medicineQuantity: string;
+  rating: number;
+  description: string;
 }
 
-export const ProductCard = ({ id, title, price, image, rating = 5 }: Props) => {
+export const ProductCard = ({ ...product }: Props) => {
+  const { id, title, price, image, rating } = product;
+  const { cart, addToCart, increaseQuantity, decreaseQuantity } =
+    useCartStore();
+
+  const inCart = cart.find((p) => p.id === product.id);
+
   return (
     <Card
       title={title}
@@ -50,9 +62,36 @@ export const ProductCard = ({ id, title, price, image, rating = 5 }: Props) => {
       {/* Footer */}
       <CardFooter className="p-4 pt-0 flex flex-col gap-2">
         {/* Add to Cart */}
-        <button className="w-full py-2 px-4 text-sm font-medium bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
-          Add to Cart
-        </button>
+        {!inCart ? (
+          <button
+            onClick={() =>
+              addToCart({
+                ...product,
+                quantity: 1,
+              })
+            }
+            className="w-full py-2 px-4 text-sm font-medium bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+          >
+            Add to Cart
+          </button>
+        ) : (
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => decreaseQuantity(product.id)}
+              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm font-bold"
+            >
+              −
+            </button>
+            <span className="text-lg font-bold">{inCart.quantity}</span>
+            <button
+              disabled={inCart.quantity >= 10}
+              onClick={() => increaseQuantity(product.id)}
+              className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm font-bold"
+            >
+              +
+            </button>
+          </div>
+        )}
 
         {/* Order Now */}
         <button className="w-full py-2 px-4 text-sm font-medium bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">

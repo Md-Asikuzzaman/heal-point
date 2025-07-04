@@ -1,6 +1,6 @@
 export const products = [
   {
-    id: 1,
+    id: "1",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-1.jpeg",
@@ -13,7 +13,7 @@ export const products = [
   },
 
   {
-    id: 2,
+    id: "2",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-2.jpeg",
@@ -26,7 +26,7 @@ export const products = [
   },
 
   {
-    id: 3,
+    id: "3",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-3.jpeg",
@@ -39,7 +39,7 @@ export const products = [
   },
 
   {
-    id: 4,
+    id: "4",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-4.jpeg",
@@ -52,7 +52,7 @@ export const products = [
   },
 
   {
-    id: 5,
+    id: "5",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-5.jpeg",
@@ -65,7 +65,7 @@ export const products = [
   },
 
   {
-    id: 6,
+    id: "6",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-6.jpeg",
@@ -78,7 +78,7 @@ export const products = [
   },
 
   {
-    id: 7,
+    id: "7",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-7.jpeg",
@@ -91,7 +91,7 @@ export const products = [
   },
 
   {
-    id: 8,
+    id: "8",
     title: "Unani & Natural Products",
     price: 20,
     image: "/products/product-8.jpeg",
