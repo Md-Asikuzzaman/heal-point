@@ -1,30 +1,8 @@
 "use client";
 
+import { useCartStore } from "@/store/useCartStore";
 import Image from "next/image";
 import React, { useState } from "react";
-
-// Dummy Cart Items (you can replace this with your actual cart state)
-const cartItems = [
-  {
-    id: 1,
-    title: "Herbal Syrup",
-    image: "/images/slide1.jpeg",
-    price: 220,
-    quantity: 2,
-  },
-  {
-    id: 2,
-    title: "Natural Balm",
-    image: "/images/slide2.webp",
-    price: 150,
-    quantity: 1,
-  },
-];
-
-const totalAmount = cartItems.reduce(
-  (sum, item) => sum + item.price * item.quantity,
-  0
-);
 
 const CheckoutPage = () => {
   const [form, setForm] = useState({
@@ -34,6 +12,8 @@ const CheckoutPage = () => {
     city: "",
     zip: "",
   });
+
+  const { cart, getTotalPrice } = useCartStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -137,29 +117,29 @@ const CheckoutPage = () => {
 
           {/* Products */}
           <div className="space-y-4">
-            {cartItems.map((item) => (
+            {cart.map((product) => (
               <div
-                key={item.id}
+                key={product.id}
                 className="flex items-center gap-4 border-b pb-3"
               >
                 <div className="w-16 h-16 relative rounded-md border bg-white overflow-hidden">
                   <Image
-                    src={item.image}
-                    alt={item.title}
+                    src={product.image}
+                    alt={product.title}
                     fill
                     className="object-contain p-1"
                   />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-sm font-medium text-gray-800">
-                    {item.title}
+                    {product.title}
                   </h4>
                   <p className="text-xs text-gray-500">
-                    {item.quantity} × ৳{item.price}
+                    {product.quantity} × ৳{product.price}
                   </p>
                 </div>
                 <div className="text-sm font-semibold text-amber-600">
-                  ৳{item.price * item.quantity}
+                  ৳{product.price * product.quantity}
                 </div>
               </div>
             ))}
@@ -169,7 +149,7 @@ const CheckoutPage = () => {
           <div className="mt-6 space-y-3 text-gray-700">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>৳{totalAmount}</span>
+              <span>৳{getTotalPrice()}</span>
             </div>
             <div className="flex justify-between">
               <span>Shipping</span>
@@ -177,7 +157,7 @@ const CheckoutPage = () => {
             </div>
             <div className="border-t pt-4 flex justify-between font-semibold text-lg">
               <span>Total</span>
-              <span className="text-amber-600">৳{totalAmount}</span>
+              <span className="text-amber-600">৳{getTotalPrice()}</span>
             </div>
           </div>
 

@@ -15,8 +15,6 @@ const CartPage = () => {
     removeFromCart,
   } = useCartStore();
 
-  console.log(cart);
-
   return (
     <section className="w-full py-10 px-4 min-h-screen">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10 border border-green-100">
@@ -28,16 +26,16 @@ const CartPage = () => {
               Your Cart
             </h2>
             <div className="space-y-6">
-              {cart.map((item) => (
+              {cart.map((product) => (
                 <div
-                  key={item.id}
+                  key={product.id}
                   className="flex flex-col sm:flex-row items-start sm:items-center gap-4 border-b pb-6"
                 >
                   {/* Image */}
                   <div className="w-full sm:w-24 h-24 relative rounded-md border bg-white overflow-hidden">
                     <Image
-                      src={item.image}
-                      alt={item.title}
+                      src={product.image}
+                      alt={product.title}
                       fill
                       className="object-contain p-2"
                     />
@@ -48,16 +46,16 @@ const CartPage = () => {
                     <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 sm:gap-0">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-800">
-                          {item.title}
+                          {product.title}
                         </h3>
                         <p className="text-sm text-gray-500">
-                          ৳{item.price} per item
+                          ৳{product.price} per item
                         </p>
                       </div>
 
                       {/* Price Total (top right on desktop) */}
                       <p className="text-base font-semibold text-amber-600 sm:text-right">
-                        ৳{item.price * item.quantity}
+                        ৳{product.price * product.quantity}
                       </p>
                     </div>
 
@@ -65,16 +63,16 @@ const CartPage = () => {
                       {/* Quantity */}
                       <div className="flex items-center border rounded-lg px-3 py-1.5 gap-3 bg-white shadow-sm">
                         <button
-                          onClick={() => decreaseQuantity(item.id)}
+                          onClick={() => decreaseQuantity(product.id)}
                           className="text-green-600 hover:text-green-700"
                         >
                           <Minus size={18} />
                         </button>
                         <span className="text-base font-medium text-gray-800">
-                          {item.quantity}
+                          {product.quantity}
                         </span>
                         <button
-                          onClick={() => increaseQuantity(item.id)}
+                          onClick={() => increaseQuantity(product.id)}
                           className="text-green-600 hover:text-green-700"
                         >
                           <Plus size={18} />
@@ -83,7 +81,7 @@ const CartPage = () => {
 
                       {/* Remove */}
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(product.id)}
                         className="text-red-500 hover:text-red-600"
                         title="Remove item"
                       >
