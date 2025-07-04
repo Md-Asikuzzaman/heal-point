@@ -8,7 +8,7 @@ import CartIcon from "./components/CartIcon";
 
 const Header = () => {
   return (
-    <header className="bg-white py-2.5 sticky top-0 shadow-2xl">
+    <header className="bg-white py-2.5 sticky top-0 shadow-2xl z-50">
       <Container className="flex items-center justify-between">
         <Link href="/">
           <Image
