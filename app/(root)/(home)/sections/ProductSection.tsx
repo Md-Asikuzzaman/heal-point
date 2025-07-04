@@ -6,22 +6,67 @@ import Link from "next/link";
 
 const ProductSection = () => {
   return (
-    <section className="mt-8">
-      <Container className="bg-white py-8 rounded-lg shadow-sm">
-        <div className="flex items-center justify-between">
+    <section className="mt-12 px-4">
+      <Container className="bg-white py-10 px-6 sm:px-10 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+        <div className="flex items-center justify-between border-b border-muted pb-2 mb-4">
           <Heading text="Unani & Natural Products" />
           <Link
-            href={"/products"}
-            className="flex items-center gap-0.5 text-primary"
+            href="/products"
+            className="group flex items-center gap-1 text-green-600 font-medium text-sm hover:text-green-700 transition-colors"
           >
-            See All <ChevronRight />
+            <span className="relative inline-block">
+              <span className="group-hover:underline underline-offset-4">
+                See All
+              </span>
+            </span>
+            <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
         {/* Products list */}
 
-        <div>
-          <ProductCard price={20} title={"Unani Product 1"} url={"/products/product-1.jpeg"} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-1.jpeg"}
+          />
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-2.jpeg"}
+          />
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-3.jpeg"}
+          />
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-4.jpeg"}
+          />
+
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-5.jpeg"}
+          />
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-6.jpeg"}
+          />
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-7.jpeg"}
+          />
+          <ProductCard
+            price={20}
+            title={"Unani Product 1"}
+            url={"/products/product-8.jpeg"}
+          />
         </div>
       </Container>
     </section>

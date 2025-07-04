@@ -12,7 +12,10 @@ interface Props {
 
 export const ProductCard = ({ title, price, url, rating = 5 }: Props) => {
   return (
-    <Card className="group relative w-full max-w-xs rounded-xl border hover:shadow-lg transition-all duration-300">
+    <Card
+      title={title}
+      className="group relative w-full max-w-xs rounded-xl border hover:shadow-lg transition-all duration-300"
+    >
       {/* Image */}
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-xl">
         <Image
