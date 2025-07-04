@@ -2,18 +2,28 @@
 
 import React, { useState } from "react";
 import { Minus, Plus } from "lucide-react";
+import { useCartStore } from "@/store/useCartStore";
 
 interface Props {
-  productId: string;
+  id: string;
+  title: string;
+  price: number;
+  image: string;
+  brand: string;
+  medicineType: string;
+  medicineQuantity: string;
+  description: string;
+  rating: number;
 }
 
-export default function ProductActions({ productId }: Props) {
+export default function ProductActions({ ...product }: Props) {
   const [quantity, setQuantity] = useState(1);
+
+  const { addToCart } = useCartStore();
 
   const increase = () => setQuantity((q) => q + 1);
   const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
-
-  console.log(productId);
+  const reset = () => setQuantity(1);
 
   return (
     <div className="space-y-6">
@@ -40,7 +50,10 @@ export default function ProductActions({ productId }: Props) {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <button
-          onClick={() => {}}
+          onClick={() => {
+            addToCart({ ...product, quantity });
+            reset();
+          }}
           className="flex-1 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all"
         >
           Add to Cart

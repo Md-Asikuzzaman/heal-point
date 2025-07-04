@@ -14,19 +14,17 @@ interface Props {
   rating: number;
 }
 
-const ProjectDetailsCard = ({
-  id,
-  title,
-  price,
-  image,
-  brand,
-  medicineType,
-  medicineQuantity,
-  description,
-  rating,
-}: Props) => {
-  console.log(id);
-
+const ProjectDetailsCard = ({ ...product }: Props) => {
+  const {
+    title,
+    price,
+    image,
+    brand,
+    medicineType,
+    medicineQuantity,
+    description,
+    rating,
+  } = product;
   return (
     <section className="w-full py-10 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10 border border-green-100">
@@ -98,7 +96,7 @@ const ProjectDetailsCard = ({
             </p>
 
             {/* Place client component here */}
-            <ProductActions productId={id} />
+            <ProductActions {...product} />
           </div>
         </div>
       </div>
