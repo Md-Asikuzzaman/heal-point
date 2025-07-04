@@ -13,7 +13,7 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const product = products.find((p) => p.id === Number(params.id));
+  const product = products.find((p) => p.id === params.id);
 
   if (!product) {
     return {
@@ -43,7 +43,7 @@ export async function generateMetadata({
 export default async function ProductDetails({ params }: Props) {
   const { id } = await params;
 
-  const product = products.find((product) => product.id === Number(id));
+  const product = products.find((product) => product.id === id);
 
   if (!product) {
     redirect("/products");

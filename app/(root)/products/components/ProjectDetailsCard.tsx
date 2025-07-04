@@ -3,7 +3,7 @@ import Image from "next/image";
 import ProductActions from "./ProductActions";
 
 interface Props {
-  id: number;
+  id: string;
   title: string;
   price: number;
   image: string;

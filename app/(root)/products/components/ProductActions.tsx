@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
 interface Props {
-  productId: number;
+  productId: string;
 }
 
 export default function ProductActions({ productId }: Props) {
