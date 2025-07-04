@@ -1,4 +1,5 @@
 import CategorySection from "./sections/CategorySection";
+import ProductSection from "./sections/ProductSection";
 import SliderSection from "./sections/SliderSection";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
     <>
       <SliderSection />
       <CategorySection />
+      <ProductSection />
     </>
   );
 }

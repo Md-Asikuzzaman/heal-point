@@ -1,19 +1,17 @@
 import Container from "@/components/shared/Container";
-import React from "react";
-import { CategoryCard } from "../components/CategoryCard";
+import Heading from "@/components/shared/Heading";
+import Link from "next/link";
 import { FaBagShopping } from "react-icons/fa6";
 import { PiGenderIntersexBold } from "react-icons/pi";
-import Link from "next/link";
+import { CategoryCard } from "../components/CategoryCard";
 
 const CategorySection = () => {
   return (
-    <section>
-      <Container>
-        <h3 className="text-2xl text-center font-medium mt-12">
-          Shop By Natural Product Category
-        </h3>
+    <section className="mt-4">
+      <Container className="bg-white py-8 rounded-lg shadow-sm">
+        <Heading text="Shop By Natural Product Category" />
 
-        <div className="grid grid-cols-6 gap-4 mt-12">
+        <div className="flex items-center justify-center gap-12 mt-12">
           <Link href="/shop">
             <CategoryCard icon={<FaBagShopping size={50} />} title="Shop" />
           </Link>

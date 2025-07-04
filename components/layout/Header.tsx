@@ -8,10 +8,16 @@ import CartIcon from "./components/CartIcon";
 
 const Header = () => {
   return (
-    <header className="bg-white py-4 sticky top-0">
+    <header className="bg-white py-2.5 sticky top-0 shadow-2xl">
       <Container className="flex items-center justify-between">
         <Link href="/">
-          <Image src="/next.svg" alt="img" height={100} width={100} />
+          <Image
+            src="/images/logo.jpg"
+            alt="VitalEdge Pharmacy"
+            height={80}
+            width={80}
+            className="rounded-full shadow-2xl"
+          />
         </Link>
         <NavLinks />
         <div className="w-full max-w-md flex items-center gap-4">
