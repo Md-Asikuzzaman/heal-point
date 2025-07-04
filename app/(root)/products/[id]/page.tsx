@@ -1,6 +1,6 @@
 import { products } from "@/constants";
-import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import ProjectDetailsCard from "../components/ProjectDetailsCard";
 
 interface Props {
@@ -46,7 +46,7 @@ export default async function ProductDetails({ params }: Props) {
   const product = products.find((product) => product.id === Number(id));
 
   if (!product) {
-    notFound();
+    redirect("/products");
   }
 
   return (

@@ -17,7 +17,7 @@ const CartIcon = ({ count = 0 }: { count: number }) => {
 
   return (
     <div className="relative w-fit cursor-pointer">
-      <ShoppingCart className="w-6 h-6 text-green-700" />
+      <ShoppingCart className="w-6 h-6 text-green-500" />
       {count > 0 && (
         <span
           className={`absolute -top-2 -right-2 flex items-center justify-center text-xs bg-red-600 text-white px-1.5 py-0.5 rounded-full shadow-lg 

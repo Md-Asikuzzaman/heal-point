@@ -1,8 +1,6 @@
-"use client";
-
-import React, { useState } from "react";
+import { CheckCircle, Star } from "lucide-react";
 import Image from "next/image";
-import { Minus, Plus, CheckCircle, Star } from "lucide-react";
+import ProductActions from "./ProductActions";
 
 interface Props {
   id: number;
@@ -27,11 +25,6 @@ const ProjectDetailsCard = ({
   description,
   rating,
 }: Props) => {
-  const [quantity, setQuantity] = useState(1);
-
-  const increase = () => setQuantity((q) => q + 1);
-  const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
-
   console.log(id);
 
   return (
@@ -100,47 +93,12 @@ const ProjectDetailsCard = ({
               </div>
             </div>
 
-            {/* Price & Quantity */}
-            <div className="space-y-6">
-              {/* Price */}
-              <p className="text-2xl font-bold text-amber-600">
-                ৳{price.toFixed(2)}
-              </p>
+            <p className="text-2xl font-bold text-orange-600">
+              ৳{price.toFixed(2)}
+            </p>
 
-              {/* Quantity Counter */}
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-medium text-gray-700">
-                  Quantity:
-                </span>
-                <div className="flex items-center border border-green-300 rounded-lg px-3 py-1.5">
-                  <button
-                    onClick={decrease}
-                    className="text-green-600 hover:text-green-700"
-                  >
-                    <Minus size={18} />
-                  </button>
-                  <span className="px-4 text-base font-medium text-gray-800">
-                    {quantity}
-                  </span>
-                  <button
-                    onClick={increase}
-                    className="text-green-600 hover:text-green-700"
-                  >
-                    <Plus size={18} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="flex-1 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all">
-                  Add to Cart
-                </button>
-                <button className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-yellow-400 hover:brightness-105 text-white rounded-lg font-semibold transition-all">
-                  Order Now
-                </button>
-              </div>
-            </div>
+            {/* Place client component here */}
+            <ProductActions productId={id} />
           </div>
         </div>
       </div>

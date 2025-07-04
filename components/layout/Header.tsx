@@ -14,9 +14,9 @@ const Header = () => {
           <Image
             src="/images/logo.jpg"
             alt="VitalEdge Pharmacy"
-            height={80}
-            width={80}
-            className="rounded-full shadow-2xl"
+            height={75}
+            width={75}
+            className="rounded-full shadow-2xl border-2 border-green-500"
           />
         </Link>
         <NavLinks />
