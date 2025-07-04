@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import slide1 from "@/public/images/slide1.jpeg";
 import slide2 from "@/public/images/slide2.webp";
 import slide3 from "@/public/images/slide3.jpeg";
+import slide4 from "@/public/images/slide4.jpeg";
 
 const slides = [
   {
@@ -30,6 +31,12 @@ const slides = [
     subtitle: "Natural immunity",
     image: slide3,
   },
+  {
+    id: 4,
+    title: "Unani & Natural Products",
+    subtitle: "Pure and Trusted",
+    image: slide4,
+  },
 ];
 
 const SliderSection = () => {
@@ -47,7 +54,7 @@ const SliderSection = () => {
   };
 
   return (
-    <section className="w-full bg-white">
+    <section className="w-full bg-white overflow-clip">
       <Slider {...settings}>
         {slides.map(({ id, title, image }) => (
           <div

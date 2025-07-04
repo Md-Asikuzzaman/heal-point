@@ -1,3 +1,4 @@
+import BannerHighlightsSection from "./sections/BannerHighlightsSection";
 import CategorySection from "./sections/CategorySection";
 import ProductSection from "./sections/ProductSection";
 import SliderSection from "./sections/SliderSection";
@@ -8,6 +9,7 @@ export default function Home() {
       <SliderSection />
       <CategorySection />
       <ProductSection />
+      <BannerHighlightsSection />
     </>
   );
 }
