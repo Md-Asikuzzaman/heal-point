@@ -22,6 +22,8 @@ const CheckoutPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Order Placed via Cash on Delivery ✅");
+
+    console.log(cart);
   };
 
   return (
@@ -105,10 +107,29 @@ const CheckoutPage = () => {
             >
               Place Order (Cash on Delivery)
             </button>
+
+            <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4">
+              <h4 className="text-green-700 font-semibold mb-2">Note:</h4>
+              <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                <li>
+                  <span className="font-medium text-gray-800">
+                    Inside Dhaka:
+                  </span>{" "}
+                  Delivery charge is{" "}
+                  <span className="text-green-700 font-semibold">৳70</span>
+                </li>
+                <li>
+                  <span className="font-medium text-gray-800">
+                    Outside Dhaka:
+                  </span>{" "}
+                  Delivery charge is{" "}
+                  <span className="text-green-700 font-semibold">৳120</span>
+                </li>
+              </ul>
+            </div>
           </form>
         </div>
 
-        {/* Right: Summary */}
         {/* Right: Order Summary */}
         <div className="bg-white shadow-md rounded-xl p-6 md:p-8 border border-amber-100 h-fit">
           <h2 className="text-xl font-bold text-amber-600 mb-6">
@@ -162,8 +183,11 @@ const CheckoutPage = () => {
           </div>
 
           {/* COD Note */}
-          <div className="mt-6 p-4 border rounded-md bg-green-50 text-sm text-green-800">
-            <strong>Payment Method:</strong> Cash on Delivery
+          <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-4">
+            <strong className="text-green-700 font-semibold mb-2">
+              Payment Method:
+            </strong>{" "}
+            Cash on Delivery
             <p className="text-xs text-gray-500 mt-1">
               Pay when you receive your package.
             </p>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa6";
 import { Card, CardContent, CardFooter } from "../ui/card";
+import { useRouter } from "next/navigation";
 
 interface Props {
   id: string;
@@ -19,11 +20,25 @@ interface Props {
 }
 
 export const ProductCard = ({ ...product }: Props) => {
+  const router = useRouter();
   const { id, title, price, image, rating } = product;
   const { cart, addToCart, increaseQuantity, decreaseQuantity } =
     useCartStore();
 
   const inCart = cart.find((p) => p.id === product.id);
+
+  const handleOrder = () => {
+    if (inCart) {
+      router.push("/checkout");
+    } else {
+      addToCart({
+        ...product,
+        quantity: 1,
+      });
+
+      router.push("/checkout");
+    }
+  };
 
   return (
     <Card
@@ -94,7 +109,10 @@ export const ProductCard = ({ ...product }: Props) => {
         )}
 
         {/* Order Now */}
-        <button className="w-full py-2 px-4 text-sm font-medium bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">
+        <button
+          onClick={handleOrder}
+          className="w-full py-2 px-4 text-sm font-medium bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors"
+        >
           Order Now
         </button>
       </CardFooter>

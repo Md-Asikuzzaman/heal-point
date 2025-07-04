@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
+import { useRouter } from "next/navigation";
 
 interface Props {
   id: string;
@@ -18,12 +19,28 @@ interface Props {
 
 export default function ProductActions({ ...product }: Props) {
   const [quantity, setQuantity] = useState(1);
+  const { cart, addToCart } = useCartStore();
 
-  const { addToCart } = useCartStore();
+  const router = useRouter();
 
   const increase = () => setQuantity((q) => q + 1);
   const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
   const reset = () => setQuantity(1);
+
+  const inCart = cart.find((p) => p.id === product.id);
+
+  const handleOrder = () => {
+    if (inCart) {
+      router.push("/checkout");
+    } else {
+      addToCart({
+        ...product,
+        quantity: 1,
+      });
+
+      router.push("/checkout");
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -59,7 +76,7 @@ export default function ProductActions({ ...product }: Props) {
           Add to Cart
         </button>
         <button
-          onClick={() => {}}
+          onClick={handleOrder}
           className="flex-1 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-semibold transition-all"
         >
           Order Now
