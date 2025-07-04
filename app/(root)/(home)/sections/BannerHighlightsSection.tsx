@@ -24,7 +24,7 @@ const BannerHighlights = () => {
     },
     {
       icon: <BiPhoneCall className="text-green-600 text-3xl" />,
-      title: "+8801618883013",
+      title: "+8801618232323",
       subtitle: "Have a Question?",
     },
   ];

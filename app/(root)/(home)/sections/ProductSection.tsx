@@ -1,6 +1,7 @@
 import Container from "@/components/shared/Container";
 import Heading from "@/components/shared/Heading";
 import { ProductCard } from "@/components/shared/ProductCard";
+import { products } from "@/constants";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -24,49 +25,10 @@ const ProductSection = () => {
         </div>
 
         {/* Products list */}
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-1.jpeg"}
-          />
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-2.jpeg"}
-          />
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-3.jpeg"}
-          />
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-4.jpeg"}
-          />
-
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-5.jpeg"}
-          />
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-6.jpeg"}
-          />
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-7.jpeg"}
-          />
-          <ProductCard
-            price={20}
-            title={"Unani Product 1"}
-            url={"/products/product-8.jpeg"}
-          />
+          {products.map((product) => (
+            <ProductCard key={product.id} {...product} />
+          ))}
         </div>
       </Container>
     </section>
