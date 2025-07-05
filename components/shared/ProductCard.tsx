@@ -6,6 +6,7 @@ import Link from "next/link";
 import { FaStar } from "react-icons/fa6";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { useRouter } from "next/navigation";
+import slugify from "slugify";
 
 interface Props {
   id: string;
@@ -21,11 +22,12 @@ interface Props {
 
 export const ProductCard = ({ ...product }: Props) => {
   const router = useRouter();
-  const { id, title, price, image, rating } = product;
+  const { title, price, image, rating } = product;
   const { cart, addToCart, increaseQuantity, decreaseQuantity } =
     useCartStore();
 
   const inCart = cart.find((p) => p.id === product.id);
+  const slug = slugify(title, { lower: true, strict: true });
 
   const handleOrder = () => {
     if (inCart) {
@@ -46,7 +48,7 @@ export const ProductCard = ({ ...product }: Props) => {
       className="group relative w-full max-w-xs rounded-xl border hover:shadow-lg transition-all duration-300"
     >
       {/* Image */}
-      <Link href={`/products/${id}`}>
+      <Link href={`/products/${slug}`}>
         <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-xl">
           <Image
             src={image}

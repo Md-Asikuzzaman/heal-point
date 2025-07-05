@@ -4,7 +4,7 @@ import React from "react";
 import SearchBar from "./components/SearchBar";
 import Container from "../shared/Container";
 import NavLinks from "./components/NavLinks";
-import CartIcon from "./components/CartIcon";
+import ViaCartIcon from "./components/ViaCartIcon";
 
 const Header = () => {
   return (
@@ -23,7 +23,7 @@ const Header = () => {
         <div className="w-full max-w-md flex items-center gap-4">
           <SearchBar />
           <Link href="/cart">
-            <CartIcon />
+            <ViaCartIcon />
           </Link>
         </div>
       </Container>

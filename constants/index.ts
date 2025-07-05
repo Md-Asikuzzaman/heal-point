@@ -1,8 +1,8 @@
 export const products = [
   {
     id: "1",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "Neemo Face Wash",
+    price: 400,
     image: "/products/product-1.jpeg",
     brand: "Abc",
     medicineType: "Syrup",
@@ -14,8 +14,8 @@ export const products = [
 
   {
     id: "2",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "Pailsnix Pro",
+    price: 1000,
     image: "/products/product-2.jpeg",
     brand: "Abc",
     medicineType: "Syrup",
@@ -27,8 +27,8 @@ export const products = [
 
   {
     id: "3",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "Ajmacare Plus",
+    price: 320,
     image: "/products/product-3.jpeg",
     brand: "Abc",
     medicineType: "Capsule",
@@ -40,8 +40,8 @@ export const products = [
 
   {
     id: "4",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "R-Kuli",
+    price: 225,
     image: "/products/product-4.jpeg",
     brand: "Abc",
     medicineType: "Syrup",
@@ -53,8 +53,8 @@ export const products = [
 
   {
     id: "5",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "Immunity Booster",
+    price: 500,
     image: "/products/product-5.jpeg",
     brand: "Abc",
     medicineType: "Syrup",
@@ -66,8 +66,8 @@ export const products = [
 
   {
     id: "6",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "Junior Monanix Combo",
+    price: 1000,
     image: "/products/product-6.jpeg",
     brand: "Abc",
     medicineType: "Syrup",
@@ -79,8 +79,8 @@ export const products = [
 
   {
     id: "7",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "Valaria Weight Loss Capsule",
+    price: 1500,
     image: "/products/product-7.jpeg",
     brand: "Abc",
     medicineType: "Syrup",
@@ -92,8 +92,8 @@ export const products = [
 
   {
     id: "8",
-    title: "Unani & Natural Products",
-    price: 20,
+    title: "Renix Ginseng Syrup",
+    price: 300,
     image: "/products/product-8.jpeg",
     brand: "Abc",
     medicineType: "Syrup",

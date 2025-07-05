@@ -2,18 +2,24 @@ import { products } from "@/constants";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ProjectDetailsCard from "../components/ProjectDetailsCard";
+import slugify from "slugify";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 // generateMetadata
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }): Promise<Metadata> {
-  const product = products.find((p) => p.id === params.id);
+  const { slug } = await params;
+
+  const product = products.find(({ title }) => {
+    const slugs = slugify(title, { lower: true, strict: true });
+    return slugs === slug;
+  });
 
   if (!product) {
     return {
@@ -41,9 +47,12 @@ export async function generateMetadata({
 }
 
 export default async function ProductDetails({ params }: Props) {
-  const { id } = await params;
+  const { slug } = await params;
 
-  const product = products.find((product) => product.id === id);
+  const product = products.find(({ title }) => {
+    const slugs = slugify(title, { lower: true, strict: true });
+    return slugs === slug;
+  });
 
   if (!product) {
     redirect("/products");
