@@ -22,9 +22,7 @@ const Header = () => {
         <NavLinks />
         <div className="w-full max-w-md flex items-center gap-4">
           <SearchBar />
-          <Link href="/cart">
-            <ViaCartIcon />
-          </Link>
+          <ViaCartIcon />
         </div>
       </Container>
     </header>

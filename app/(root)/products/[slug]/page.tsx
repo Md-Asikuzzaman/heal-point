@@ -9,11 +9,7 @@ interface Props {
 }
 
 // generateMetadata
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   const product = products.find(({ title }) => {

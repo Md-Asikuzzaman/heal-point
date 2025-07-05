@@ -2,6 +2,7 @@
 
 import { ShoppingCart } from "lucide-react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const CartIcon = dynamic(() => import("./CartIcon"), {
   ssr: false,
@@ -14,9 +15,9 @@ const CartIcon = dynamic(() => import("./CartIcon"), {
 
 const ViaCartIcon = () => {
   return (
-    <>
+    <Link href="/cart">
       <CartIcon />
-    </>
+    </Link>
   );
 };
 
