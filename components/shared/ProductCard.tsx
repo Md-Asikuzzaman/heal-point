@@ -51,7 +51,7 @@ export const ProductCard = ({ ...product }: Props) => {
   return (
     <Card
       title={title}
-      className="group relative w-full max-w-xs rounded-xl border hover:shadow-lg transition-all duration-300"
+      className="group relative w-full lg:max-w-xs rounded-xl border hover:shadow-lg transition-all duration-300"
     >
       {/* Image */}
       <Link href={`/products/${slug}`}>

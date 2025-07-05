@@ -9,7 +9,7 @@ const ProductSection = () => {
   return (
     <section className="mt-12 px-4">
       <Container className="bg-white py-10 px-6 sm:px-10 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
-        <div className="flex items-center justify-between border-b border-muted pb-2 mb-4">
+        <div className="flex flex-col md:flex-row items-center justify-between border-b border-muted pb-2 mb-4">
           <Heading text="Unani & Natural Products" />
           <Link
             href="/products"
