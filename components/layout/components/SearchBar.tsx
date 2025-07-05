@@ -91,7 +91,7 @@ export default function SearchBar() {
         }}
         onKeyDown={handleKeyDown}
         placeholder="Search products..."
-        className="pr-12 rounded-xl border border-gray-300 shadow-sm focus:border-green-600 focus:ring-2 focus:ring-green-300 transition"
+        className="pr-12 rounded-xl border !border-gray-300 shadow-sm focus:!border-green-600 focus:ring-2 focus:!ring-green-300 transition"
       />
       <Search className="absolute top-1/2 right-3 -translate-y-1/2 w-5 h-5 text-green-500 pointer-events-none" />
 
@@ -120,7 +120,7 @@ export default function SearchBar() {
                     : "hover:bg-gray-200"
                 }`}
               >
-                {item.title}
+                {item.title} - ৳{item.price}
               </div>
             );
           })}

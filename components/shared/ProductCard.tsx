@@ -7,6 +7,7 @@ import { FaStar } from "react-icons/fa6";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { useRouter } from "next/navigation";
 import slugify from "slugify";
+import { Trash2 } from "lucide-react";
 
 interface Props {
   id: string;
@@ -23,8 +24,13 @@ interface Props {
 export const ProductCard = ({ ...product }: Props) => {
   const router = useRouter();
   const { title, price, image, rating } = product;
-  const { cart, addToCart, increaseQuantity, decreaseQuantity } =
-    useCartStore();
+  const {
+    cart,
+    addToCart,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart,
+  } = useCartStore();
 
   const inCart = cart.find((p) => p.id === product.id);
   const slug = slugify(title, { lower: true, strict: true });
@@ -106,6 +112,15 @@ export const ProductCard = ({ ...product }: Props) => {
               className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm font-bold"
             >
               +
+            </button>
+
+            {/* 🗑️ Delete Button */}
+            <button
+              onClick={() => removeFromCart(product.id)}
+              title="Remove from cart"
+              className="bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 rounded-full p-1.5 shadow-sm transition-all duration-200 border border-red-200 hover:shadow-md"
+            >
+              <Trash2 className="w-4.5 h-4.5" />
             </button>
           </div>
         )}
