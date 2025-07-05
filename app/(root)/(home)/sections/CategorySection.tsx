@@ -11,14 +11,17 @@ const CategorySection = () => {
       <Container className="bg-white py-10 px-6 sm:px-10 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
         <Heading text="Shop By Natural Product Category" />
 
-        <div className="flex items-center justify-center gap-12 mt-12">
+        <div className="flex items-center justify-center gap-5 md:gap-10 mt-12 flex-wrap">
           <Link href="/shop">
-            <CategoryCard icon={<FaBagShopping size={50} />} title="Shop" />
+            <CategoryCard
+              icon={<FaBagShopping className="md:size-20" />}
+              title="My Shop"
+            />
           </Link>
 
           <Link href="/sexual-wellness">
             <CategoryCard
-              icon={<PiGenderIntersexBold size={70} />}
+              icon={<PiGenderIntersexBold className="md:size-20" />}
               title="Sexual Wellness"
             />
           </Link>
