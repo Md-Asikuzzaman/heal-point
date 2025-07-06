@@ -13,7 +13,7 @@ const OrderSummary = () => {
 
       {/* Products */}
       <div className="space-y-4">
-        {cart.length > 0 ? (
+        {cart.length !== 0 ? (
           cart.map((product) => (
             <div
               key={product.id}
@@ -41,7 +41,7 @@ const OrderSummary = () => {
             </div>
           ))
         ) : (
-          <p>Your cart is empty</p>
+          <p>Your cart is empty!</p>
         )}
       </div>
 
