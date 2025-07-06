@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type Product = {
-  quantity: number;
   id: string;
   title: string;
   price: number;
@@ -11,6 +10,7 @@ type Product = {
   medicineType: string;
   medicineQuantity: string;
   rating: number;
+  quantity: number;
   description: string;
 };
 
