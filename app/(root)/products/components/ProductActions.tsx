@@ -46,19 +46,20 @@ export default function ProductActions({ ...product }: Props) {
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <span className="text-sm font-medium text-gray-700">Quantity:</span>
-        <div className="flex items-center border border-green-300 rounded-lg px-3 py-1.5">
+
+        <div className="flex items-center border rounded-full p-1.5 gap-3 bg-white shadow-sm">
           <button
             onClick={decrease}
-            className="text-green-600 hover:text-green-700"
+            className="bg-red-500 hover:bg-red-600 text-white p-1 rounded-full text-sm font-bold"
           >
             <Minus size={18} />
           </button>
-          <span className="px-4 text-base font-medium text-gray-800">
+          <span className="text-base font-medium text-gray-800">
             {quantity}
           </span>
           <button
             onClick={increase}
-            className="text-green-600 hover:text-green-700"
+            className="bg-green-500 hover:bg-green-600 text-white p-1 rounded-full text-sm font-bold"
           >
             <Plus size={18} />
           </button>

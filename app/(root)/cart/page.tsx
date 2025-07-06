@@ -61,10 +61,10 @@ const CartPage = () => {
 
                     <div className="mt-3 flex items-center justify-between">
                       {/* Quantity */}
-                      <div className="flex items-center border rounded-lg px-3 py-1.5 gap-3 bg-white shadow-sm">
+                      <div className="flex items-center border rounded-full p-1.5 gap-3 bg-white shadow-sm">
                         <button
                           onClick={() => decreaseQuantity(product.id)}
-                          className="text-green-600 hover:text-green-700"
+                          className="bg-red-500 hover:bg-red-600 text-white p-1 rounded-full text-sm font-bold"
                         >
                           <Minus size={18} />
                         </button>
@@ -73,7 +73,7 @@ const CartPage = () => {
                         </span>
                         <button
                           onClick={() => increaseQuantity(product.id)}
-                          className="text-green-600 hover:text-green-700"
+                          className="bg-green-500 hover:bg-green-600 text-white p-1 rounded-full text-sm font-bold"
                         >
                           <Plus size={18} />
                         </button>

@@ -7,7 +7,7 @@ import { FaStar } from "react-icons/fa6";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { useRouter } from "next/navigation";
 import slugify from "slugify";
-import { Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
 interface Props {
   id: string;
@@ -49,14 +49,12 @@ export const ProductCard = ({ ...product }: Props) => {
   };
 
   return (
-    <Card
-      title={title}
-      className="group relative w-full lg:max-w-xs rounded-xl border hover:shadow-lg transition-all duration-300"
-    >
+    <Card className="group relative w-full lg:max-w-xs rounded-xl border hover:shadow-lg transition-all duration-300">
       {/* Image */}
       <Link href={`/products/${slug}`}>
         <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-xl">
           <Image
+            title={title}
             src={image}
             alt={title}
             fill
@@ -99,20 +97,24 @@ export const ProductCard = ({ ...product }: Props) => {
           </button>
         ) : (
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => decreaseQuantity(product.id)}
-              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm font-bold"
-            >
-              −
-            </button>
-            <span className="text-lg font-bold">{inCart.quantity}</span>
-            <button
-              disabled={inCart.quantity >= 10}
-              onClick={() => increaseQuantity(product.id)}
-              className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm font-bold"
-            >
-              +
-            </button>
+            <div className="flex items-center border rounded-full p-1.5 gap-3 bg-white shadow-sm">
+              <button
+                onClick={() => decreaseQuantity(product.id)}
+                className="bg-red-500 hover:bg-red-600 text-white p-1 rounded-full text-sm font-bold"
+              >
+                <Minus size={18} />
+              </button>
+              <span className="text-base font-medium text-gray-800">
+                {inCart.quantity}
+              </span>
+              <button
+                disabled={inCart.quantity >= 10}
+                onClick={() => increaseQuantity(product.id)}
+                className="bg-green-500 hover:bg-green-600 text-white p-1 rounded-full text-sm font-bold"
+              >
+                <Plus size={18} />
+              </button>
+            </div>
 
             {/* 🗑️ Delete Button */}
             <button

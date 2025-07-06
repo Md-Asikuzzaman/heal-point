@@ -131,8 +131,8 @@ const CheckoutPage = () => {
         </div>
 
         {/* Right: Order Summary */}
-        <div className="bg-white shadow-md rounded-xl p-6 md:p-8 border border-amber-100 h-fit">
-          <h2 className="text-xl font-bold text-amber-600 mb-6">
+        <div className="bg-white shadow-md rounded-xl p-6 md:p-8 border border-orange-100 h-fit">
+          <h2 className="text-xl font-bold text-orange-600 mb-6">
             Order Summary
           </h2>
 
@@ -159,7 +159,7 @@ const CheckoutPage = () => {
                     {product.quantity} × ৳{product.price}
                   </p>
                 </div>
-                <div className="text-sm font-semibold text-amber-600">
+                <div className="text-sm font-semibold text-orange-600">
                   ৳{product.price * product.quantity}
                 </div>
               </div>
@@ -178,7 +178,7 @@ const CheckoutPage = () => {
             </div>
             <div className="border-t pt-4 flex justify-between font-semibold text-lg">
               <span>Total</span>
-              <span className="text-amber-600">৳{getTotalPrice()}</span>
+              <span className="text-orange-600">৳{getTotalPrice()}</span>
             </div>
           </div>
 

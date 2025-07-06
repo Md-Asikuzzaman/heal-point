@@ -220,3 +220,15 @@
 .slick-dots li.slick-active button:before {
   color: #16a34a !important;
 } */
+
+.rich-text-editor h1 {
+  @apply text-2xl font-bold;
+}
+
+.rich-text-editor h2 {
+  @apply text-xl font-bold;
+}
+
+.rich-text-editor h3 {
+  @apply text-lg font-bold;
+}
