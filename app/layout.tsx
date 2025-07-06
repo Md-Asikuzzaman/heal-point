@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner";
+import { Toaster as Toast } from "react-hot-toast";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -71,6 +72,7 @@ export default function RootLayout({
         {children}
 
         <Toaster />
+        <Toast />
       </body>
     </html>
   );

@@ -18,14 +18,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
 import { z } from "zod";
+
+import { triggerConfetti } from "@/lib/confetti";
+import toast from "react-hot-toast";
 
 const ShippingDetailsForm = () => {
   const [isPending, startTransition] = useTransition();
   const { cart, clearCart } = useCartStore();
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   const form = useForm<z.infer<typeof orderFormSchema>>({
     resolver: zodResolver(orderFormSchema),
@@ -47,10 +50,10 @@ const ShippingDetailsForm = () => {
           const res = await createOrder({ ...values, items: cart });
 
           if (res.success) {
-            // alert(res.message);
             toast.success(res.message);
             form.reset();
             clearCart();
+            triggerConfetti();
           } else {
             alert(res.message);
           }
