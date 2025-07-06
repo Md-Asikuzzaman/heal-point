@@ -1,22 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type Product = {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  brand: string;
-  medicineType: string;
-  medicineQuantity: string;
-  rating: number;
-  quantity: number;
-  description: string;
-};
-
 type CartStore = {
-  cart: Product[];
-  addToCart: (product: Product) => void;
+  cart: CartProductType[];
+  addToCart: (product: CartProductType) => void;
   removeFromCart: (id: string) => void;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;

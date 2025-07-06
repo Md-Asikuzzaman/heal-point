@@ -1,9 +1,9 @@
 "use client";
 
 import Container from "@/components/shared/Container";
-import ShippingDetailsForm from "./components/ShippingDetailsForm";
 import dynamic from "next/dynamic";
 import OrderSummarySkeleton from "./components/OrderSummarySkeleton";
+import ShippingDetailsForm from "./components/ShippingDetailsForm";
 
 const OrderSummary = dynamic(() => import("./components/OrderSummary"), {
   ssr: false,

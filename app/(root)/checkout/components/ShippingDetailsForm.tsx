@@ -1,116 +1,215 @@
 "use client";
 
-import React, { useState } from "react";
+import { createOrder } from "@/app/actions/create-order";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { orderFormSchema } from "@/schema";
+import { useCartStore } from "@/store/useCartStore";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import { z } from "zod";
 
 const ShippingDetailsForm = () => {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    city: "",
-    zip: "",
+  const [isPending, startTransition] = useTransition();
+  const { cart, clearCart } = useCartStore();
+  const isLoggedIn = false;
+
+  const form = useForm<z.infer<typeof orderFormSchema>>({
+    resolver: zodResolver(orderFormSchema),
+    defaultValues: {
+      fullName: "",
+      phone: "",
+      address: "",
+      city: "",
+      zipCode: "",
+    },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  function onSubmit(values: z.infer<typeof orderFormSchema>) {
+    try {
+      console.log(values);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Order Placed via Cash on Delivery ✅");
+      if (cart.length > 0) {
+        startTransition(async () => {
+          const res = await createOrder({ ...values, items: cart });
 
-    // console.log(cart);
-  };
+          if (res.success) {
+            // alert(res.message);
+            toast.success(res.message);
+            form.reset();
+            clearCart();
+          } else {
+            alert(res.message);
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Form submission error", error);
+      toast.error("Failed to submit the form. Please try again.");
+    }
+  }
 
   return (
     <div className="bg-white shadow-md rounded-xl p-6 md:p-8 border border-green-100">
       <h2 className="text-2xl font-bold text-green-700 mb-6">
         Shipping Details
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="text-sm font-medium text-gray-600">Full Name</label>
-          <input
-            name="name"
-            required
-            value={form.name}
-            onChange={handleChange}
-            className="w-full mt-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            placeholder="Enter your name"
-          />
-        </div>
-        <div>
-          <label className="text-sm font-medium text-gray-600">Phone</label>
-          <input
-            name="phone"
-            required
-            value={form.phone}
-            onChange={handleChange}
-            className="w-full mt-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            placeholder="01xxxxxxxxx"
-          />
-        </div>
-        <div>
-          <label className="text-sm font-medium text-gray-600">Address</label>
-          <input
-            name="address"
-            required
-            value={form.address}
-            onChange={handleChange}
-            className="w-full mt-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            placeholder="Street address, house no"
-          />
-        </div>
-        <div className="flex gap-4">
-          <div className="w-1/2">
-            <label className="text-sm font-medium text-gray-600">City</label>
-            <input
-              name="city"
-              required
-              value={form.city}
-              onChange={handleChange}
-              className="w-full mt-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Dhaka"
-            />
-          </div>
-          <div className="w-1/2">
-            <label className="text-sm font-medium text-gray-600">
-              ZIP Code
-            </label>
-            <input
-              name="zip"
-              required
-              value={form.zip}
-              onChange={handleChange}
-              className="w-full mt-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="1200"
-            />
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-md transition-all mt-6"
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 max-w-3xl mx-auto py-10 bg-white p-5"
+          method="POST"
         >
-          Place Order (Cash on Delivery)
-        </button>
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Full name" type="text" {...field} />
+                </FormControl>
 
-        <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4">
-          <h4 className="text-green-700 font-semibold mb-2">Note:</h4>
-          <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
-            <li>
-              <span className="font-medium text-gray-800">Inside Dhaka:</span>{" "}
-              Delivery charge is{" "}
-              <span className="text-green-700 font-semibold">৳70</span>
-            </li>
-            <li>
-              <span className="font-medium text-gray-800">Outside Dhaka:</span>{" "}
-              Delivery charge is{" "}
-              <span className="text-green-700 font-semibold">৳120</span>
-            </li>
-          </ul>
-        </div>
-      </form>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="O1XXXXXXXXX" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Street Address, house no"
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-6">
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Khulna" type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="col-span-6">
+              <FormField
+                control={form.control}
+                name="zipCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Zip Code</FormLabel>
+                    <FormControl>
+                      <Input placeholder="1234" type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="my-6 lg:my-8 space-y-3">
+            {isLoggedIn ? (
+              <Button
+                disabled={isPending || cart.length === 0}
+                type="submit"
+                className={cn(
+                  "w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-md transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+                  (isPending || cart.length === 0) && "pointer-events-none"
+                )}
+              >
+                {isPending
+                  ? "Order Placing..."
+                  : "Place Order (Cash on Delivery)"}
+              </Button>
+            ) : (
+              <>
+                <Button
+                  disabled={isPending || cart.length === 0}
+                  type="submit"
+                  className={cn(
+                    "w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-md transition-all",
+                    (isPending || cart.length === 0) && "pointer-events-none"
+                  )}
+                >
+                  {isPending
+                    ? "Order Placing..."
+                    : "Place Order without login (Cash on Delivery)"}
+                </Button>
+                <Link href={"/auth/sign-in"}>
+                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-md transition-all">
+                    Login now
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
+
+          <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4">
+            <h4 className="text-green-700 font-semibold mb-2">Note:</h4>
+            <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+              <li>
+                <span className="font-medium text-gray-800">Inside Dhaka:</span>{" "}
+                Delivery charge is{" "}
+                <span className="text-green-700 font-semibold">৳70</span>
+              </li>
+              <li>
+                <span className="font-medium text-gray-800">
+                  Outside Dhaka:
+                </span>{" "}
+                Delivery charge is{" "}
+                <span className="text-green-700 font-semibold">৳120</span>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };
