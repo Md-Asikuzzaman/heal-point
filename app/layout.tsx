@@ -14,7 +14,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: {
     default: "VitalEdge Pharmacy",
-    template: "%s - Sales 100% organic and authentic natural products.",
+    template: "%s - VitalEdge Pharmacy",
   },
   description: "VitalEdge Pharmacy",
   keywords: "VitalEdge Pharmacy, VitalEdge Pharmacy, VitalEdge Pharmacy",

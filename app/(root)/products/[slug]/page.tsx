@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `Buy ${product.title} at only ৳${product.price}. 100% organic and authentic natural products.`,
       images: [
         {
-          url: product.image,
+          url: `${process.env.NEXT_PUBLIC_SITE_URL}${product.image}`,
           width: 800,
           height: 600,
           alt: product.title,
