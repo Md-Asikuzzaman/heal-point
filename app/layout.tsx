@@ -13,26 +13,24 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "Md Asikuzzaman | Frontend & MERN Stack Developer",
-    template: "%s - Md Asikuzzaman | Frontend & MERN Stack Developer",
+    default: "VitalEdge Pharmacy",
+    template: "%s - Sales 100% organic and authentic natural products.",
   },
-  description:
-    "Md Asikuzzaman is a skilled frontend and MERN stack developer specializing in Next.js, React.js, TypeScript, Tailwind CSS, and accessibility engineering.",
-  keywords:
-    "Frontend Developer, Software Developer, MERN Stack, Next.js, React.js, TypeScript, Tailwind CSS, Web Development, Accessibility, GSAP, Framer Motion",
+  description: "VitalEdge Pharmacy",
+  keywords: "VitalEdge Pharmacy, VitalEdge Pharmacy, VitalEdge Pharmacy",
   robots: "index, follow",
   // Open-Graph for social site
   openGraph: {
     type: "website",
-    url: "https://devasik.vercel.app",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
     locale: "en_US",
-    siteName: "Md Asikuzzaman",
+    siteName: "VitalEdge Pharmacy",
     images: [
       {
-        url: "https://avatars.githubusercontent.com/u/84761191?v=4",
+        url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.jpg`,
         width: 1200,
         height: 630,
-        alt: "Md Asikuzzaman - Frontend & MERN Stack Developer",
+        alt: "VitalEdge Pharmacy",
       },
     ],
   },
@@ -45,15 +43,15 @@ export const metadata: Metadata = {
     {
       rel: "icon",
       type: "image/png",
-      sizes: "32x32",
-      url: "https://avatars.githubusercontent.com/u/84761191?v=4",
+      sizes: "48x48",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.jpg`,
     },
   ],
-  metadataBase: new URL("https://devasik.vercel.app"),
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
   authors: [
     {
-      name: "Md Asikuzzaman",
-      url: "https://devasik.vercel.app",
+      name: "VitalEdge Pharmacy",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
     },
   ],
 };
