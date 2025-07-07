@@ -1,6 +1,6 @@
 "use client";
 
-import { createOrder } from "@/app/actions/create-order";
+import { createOrderAction } from "@/app/actions/create-order";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -47,7 +47,7 @@ const ShippingDetailsForm = () => {
 
       if (cart.length > 0) {
         startTransition(async () => {
-          const res = await createOrder({ ...values, items: cart });
+          const res = await createOrderAction({ ...values, items: cart });
 
           if (res.success) {
             toast.success(res.message);

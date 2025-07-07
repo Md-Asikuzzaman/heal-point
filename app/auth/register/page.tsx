@@ -1,5 +1,6 @@
 "use client";
 
+import { RegisterAction } from "@/app/actions/register";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,18 +15,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   EyeIcon,
   EyeOffIcon,
+  Loader,
   LockIcon,
   MailIcon,
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import z from "zod";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -34,7 +38,7 @@ export default function Register() {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
     },
@@ -42,8 +46,17 @@ export default function Register() {
 
   function onSubmit(values: z.infer<typeof registerSchema>) {
     try {
-      console.log(values);
+      startTransition(async () => {
+        const res = await RegisterAction(values);
+        if (res.success) {
+          toast.success(res.message);
+          form.reset();
+        } else {
+          alert(res.message);
+        }
+      });
 
+      console.log(values);
       form.reset();
     } catch (error) {
       console.log(error);
@@ -68,7 +81,7 @@ export default function Register() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="username"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -139,7 +152,14 @@ export default function Register() {
             />
 
             <Button type="submit" className="w-full">
-              Log In
+              {isPending ? (
+                <span className="flex items-center gap-1.5">
+                  <Loader className="animate-spin" />
+                  Registering...
+                </span>
+              ) : (
+                "Register"
+              )}
             </Button>
           </form>
         </Form>

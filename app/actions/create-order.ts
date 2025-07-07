@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 
-export async function createOrder(data: {
+export async function createOrderAction(data: {
   fullName: string;
   phone: string;
   address: string;

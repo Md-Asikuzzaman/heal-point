@@ -43,6 +43,8 @@ model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?   @unique
+  password      String?
+  role          Role      @default(user)
   emailVerified DateTime? @map("email_verified")
   image         String?
 
@@ -50,6 +52,11 @@ model User {
   sessions Session[]
 
   @@map("users")
+}
+
+enum Role {
+  user
+  admin
 }
 
 model VerificationToken {
