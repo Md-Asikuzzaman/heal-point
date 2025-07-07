@@ -11,7 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { orderFormSchema } from "@/schema";
 import { useCartStore } from "@/store/useCartStore";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +23,7 @@ import { z } from "zod";
 
 import { triggerConfetti } from "@/lib/confetti";
 import toast from "react-hot-toast";
+import OrderPlaceButton from "./OrderPlaceButton";
 
 const ShippingDetailsForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -159,32 +159,20 @@ const ShippingDetailsForm = () => {
 
           <div className="my-6 lg:my-8 space-y-3">
             {isLoggedIn ? (
-              <Button
-                disabled={isPending || cart.length === 0}
-                type="submit"
-                className={cn(
-                  "w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-md transition-all disabled:opacity-50 disabled:cursor-not-allowed",
-                  (isPending || cart.length === 0) && "pointer-events-none"
-                )}
-              >
-                {isPending
-                  ? "Order Placing..."
-                  : "Place Order (Cash on Delivery)"}
-              </Button>
+              <OrderPlaceButton
+                text="Place Order (Cash on Delivery)"
+                cart={cart}
+                isPending={isPending}
+                className="bg-green-600 hover:bg-green-700"
+              />
             ) : (
               <>
-                <Button
-                  disabled={isPending || cart.length === 0}
-                  type="submit"
-                  className={cn(
-                    "w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-md transition-all",
-                    (isPending || cart.length === 0) && "pointer-events-none"
-                  )}
-                >
-                  {isPending
-                    ? "Order Placing..."
-                    : "Place Order without login (Cash on Delivery)"}
-                </Button>
+                <OrderPlaceButton
+                  text="Place Order without login (Cash on Delivery)"
+                  cart={cart}
+                  isPending={isPending}
+                  className="bg-orange-600 hover:bg-orange-700"
+                />
                 <Link href={"/auth/sign-in"}>
                   <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-md transition-all">
                     Login now
