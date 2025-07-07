@@ -21,6 +21,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -30,6 +31,7 @@ import z from "zod";
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -51,13 +53,11 @@ export default function Register() {
         if (res.success) {
           toast.success(res.message);
           form.reset();
+          router.replace("/auth/login");
         } else {
-          alert(res.message);
+          toast.error(res.message);
         }
       });
-
-      console.log(values);
-      form.reset();
     } catch (error) {
       console.log(error);
     }
@@ -151,7 +151,7 @@ export default function Register() {
               )}
             />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isPending}>
               {isPending ? (
                 <span className="flex items-center gap-1.5">
                   <Loader className="animate-spin" />
