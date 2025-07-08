@@ -24,11 +24,13 @@ import { z } from "zod";
 import { triggerConfetti } from "@/lib/confetti";
 import toast from "react-hot-toast";
 import OrderPlaceButton from "./OrderPlaceButton";
+import { useSession } from "next-auth/react";
+import ShippingDetailsSkeleton from "./ShippingDetailsSkeleton";
 
 const ShippingDetailsForm = () => {
   const [isPending, startTransition] = useTransition();
   const { cart, clearCart } = useCartStore();
-  const isLoggedIn = false;
+  const { data: isLoggedIn, status } = useSession();
 
   const form = useForm<z.infer<typeof orderFormSchema>>({
     resolver: zodResolver(orderFormSchema),
@@ -63,6 +65,10 @@ const ShippingDetailsForm = () => {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");
     }
+  }
+
+  if (status === "loading") {
+    return <ShippingDetailsSkeleton />;
   }
 
   return (
