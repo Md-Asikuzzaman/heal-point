@@ -13,7 +13,7 @@ import { Headset, LogIn, LogOut, Settings, UserCircle2 } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   session: Session | null;
@@ -21,11 +21,13 @@ interface Props {
 
 const ProfileDropdown = ({ session }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleSettings = () => router.push("/settings");
-  const handleLogin = () => router.push("/api/auth/signin");
+  const handleLogin = () =>
+    router.push(`/api/auth/signin?callbackUrl=${pathname}`);
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/" });
+    await signOut();
   };
 
   return (

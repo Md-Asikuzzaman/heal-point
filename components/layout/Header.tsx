@@ -8,6 +8,8 @@ import ViaCartIcon from "./components/ViaCartIcon";
 import ProfileDropdown from "./components/ProfileDropdown";
 import { auth } from "@/lib/auth";
 
+
+
 const Header = async () => {
   const session = await auth();
 
