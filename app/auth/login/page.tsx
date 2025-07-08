@@ -12,14 +12,22 @@ import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon, LockIcon, MailIcon } from "lucide-react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import z from "zod";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -33,13 +41,33 @@ export default function Login() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    try {
-      console.log(values);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    setIsLoading(true);
 
-      form.reset();
+    try {
+      const { email, password } = values;
+
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl,
+      });
+
+      if (result?.error) {
+        toast.error("Invalid credentials");
+      } else if (result?.ok && result.url) {
+        toast.success("Login successful!");
+        router.push(result.url);
+      } else {
+        toast.error("Unknown error occurred");
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+      form.reset();
     }
   }
 
@@ -111,8 +139,8 @@ export default function Login() {
               )}
             />
 
-            <Button type="submit" className="w-full">
-              Log In
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Log In"}
             </Button>
           </form>
         </Form>

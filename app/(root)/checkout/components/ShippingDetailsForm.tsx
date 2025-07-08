@@ -28,7 +28,7 @@ import OrderPlaceButton from "./OrderPlaceButton";
 const ShippingDetailsForm = () => {
   const [isPending, startTransition] = useTransition();
   const { cart, clearCart } = useCartStore();
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   const form = useForm<z.infer<typeof orderFormSchema>>({
     resolver: zodResolver(orderFormSchema),
@@ -173,7 +173,7 @@ const ShippingDetailsForm = () => {
                   isPending={isPending}
                   className="bg-orange-600 hover:bg-orange-700"
                 />
-                <Link href={"/auth/sign-in"}>
+                <Link href={"/api/auth/signin?callbackUrl=/checkout"}>
                   <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-md transition-all">
                     Login now
                   </Button>
