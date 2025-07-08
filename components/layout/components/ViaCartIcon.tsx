@@ -7,9 +7,12 @@ import Link from "next/link";
 const CartIcon = dynamic(() => import("./CartIcon"), {
   ssr: false,
   loading: () => (
-    <div className="relative w-fit cursor-pointer">
-      <ShoppingCart className="w-6 h-6 text-green-500" />
-    </div>
+    <button
+      aria-label="Cart"
+      className="relative rounded-full p-2 hover:bg-gray-100 cursor-pointer"
+    >
+      <ShoppingCart className="size-6 text-green-500" />
+    </button>
   ),
 });
 
