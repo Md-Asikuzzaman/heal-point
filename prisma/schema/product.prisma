@@ -1,0 +1,14 @@
+// Product related models
+model Product {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  price            Float
+  image            String
+  brand            String
+  medicineType     String
+  medicineQuantity String
+  rating           Float
+  description      String
+
+  @@map("products")
+}
