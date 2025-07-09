@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,8 +9,6 @@ import NavLinks from "./components/NavLinks";
 import ViaCartIcon from "./components/ViaCartIcon";
 import ProfileDropdown from "./components/ProfileDropdown";
 import { auth } from "@/lib/auth";
-
-
 
 const Header = async () => {
   const session = await auth();

@@ -59,7 +59,6 @@ const LoginForm = () => {
       } else if (result?.ok && result.url) {
         toast.success("Login successful!");
         form.reset();
-        router.refresh();
         router.push(result.url);
       } else {
         toast.error("Unknown error occurred");
