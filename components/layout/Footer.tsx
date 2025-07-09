@@ -78,14 +78,15 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-3 text-white">Follow Us</h3>
             <div className="flex items-center gap-4 mt-2">
-              {socialLinks.map(({ icon: Icon, href }, index) => (
-                <a
+              {socialLinks.map(({ icon: Icon, href, label }, index) => (
+                <Link
+                  aria-label={label}
                   key={index}
                   href={href}
                   className="text-gray-300 hover:text-white transition transform hover:scale-110"
                 >
                   <Icon size={18} />
-                </a>
+                </Link>
               ))}
             </div>
           </div>

@@ -2,9 +2,9 @@
 
 import Container from "@/components/shared/Container";
 import dynamic from "next/dynamic";
-import CartDetailsSkeleton from "./components/CartDetailsSkeleton";
+import CartDetailsSkeleton from "./_components/CartDetailsSkeleton";
 
-const CartDetails = dynamic(() => import("./components/CartDetails"), {
+const CartDetails = dynamic(() => import("./_components/CartDetails"), {
   ssr: false,
   loading: () => <CartDetailsSkeleton />,
 });

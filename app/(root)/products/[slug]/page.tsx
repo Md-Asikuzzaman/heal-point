@@ -1,7 +1,7 @@
 import { products } from "@/constants";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import ProjectDetailsCard from "../components/ProjectDetailsCard";
+import ProjectDetailsCard from "../_components/ProjectDetailsCard";
 import slugify from "slugify";
 
 interface Props {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProductDetails({ params }: Props) {
+export default async function ProductDetailsPage({ params }: Props) {
   const { slug } = await params;
 
   const product = products.find(({ title }) => {

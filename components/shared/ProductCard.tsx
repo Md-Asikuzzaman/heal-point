@@ -70,12 +70,15 @@ export const ProductCard = ({ ...product }: Props) => {
         </h3>
 
         <div className="flex items-center justify-between mb-2">
-          <p className="text-green-600 font-bold text-lg">
+          <p
+            className="text-green-600 font-bold text-lg"
+            aria-label="product price"
+          >
             ৳{price.toFixed(2)}
           </p>
           <div className="flex items-center gap-0.5 text-yellow-500 text-sm">
             {Array.from({ length: rating }).map((_, i) => (
-              <FaStar key={i} />
+              <FaStar key={i} aria-label='star'/>
             ))}
           </div>
         </div>

@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Clock } from "lucide-react";
 
-export default function SexualWellness() {
+export default function SexualWellnessPage() {
   const router = useRouter();
 
   return (

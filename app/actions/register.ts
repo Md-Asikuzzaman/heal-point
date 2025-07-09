@@ -5,11 +5,22 @@ import { registerSchema } from "@/schema";
 import bcrypt from "bcryptjs";
 import z from "zod";
 
-export async function RegisterAction(data: z.infer<typeof registerSchema>) {
+type registerFormTypes = z.infer<typeof registerSchema>;
+
+export async function RegisterAction(formData: registerFormTypes) {
   try {
+    // Validate data
+    const parsed = registerSchema.safeParse(formData);
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: "Validation failed",
+      };
+    }
+
     // Check if email already exists
     const existingUser = await prisma.user.findUnique({
-      where: { email: data.email },
+      where: { email: formData.email },
     });
 
     if (existingUser) {
@@ -17,12 +28,12 @@ export async function RegisterAction(data: z.infer<typeof registerSchema>) {
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await bcrypt.hash(formData.password, 10);
 
     await prisma.user.create({
       data: {
-        name: data.name,
-        email: data.email,
+        name: formData.name,
+        email: formData.email,
         password: hashedPassword,
       },
     });

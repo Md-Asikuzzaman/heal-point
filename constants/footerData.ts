@@ -24,10 +24,10 @@ export const footerSections = [
 ];
 
 export const socialLinks = [
-  { icon: FaFacebookF, href: "#" },
-  { icon: FaInstagram, href: "#" },
-  { icon: FaTwitter, href: "#" },
-  { icon: FaYoutube, href: "#" },
+  { label: "Facebook", icon: FaFacebookF, href: "#" },
+  { label: "Instagram", icon: FaInstagram, href: "#" },
+  { label: "Twitter", icon: FaTwitter, href: "#" },
+  { label: "Youtube", icon: FaYoutube, href: "#" },
 ];
 
 export const contactInfo = {
