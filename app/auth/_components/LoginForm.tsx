@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon, LockIcon, MailIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -25,7 +25,7 @@ import SubmitButton from "./SubmitButton";
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, setIsPending] = useState<boolean>(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
@@ -59,7 +59,8 @@ const LoginForm = () => {
       } else if (result?.ok && result.url) {
         toast.success("Login successful!");
         form.reset();
-        router.push(result.url);
+        // router.push(result.url);
+        window.location.href = result.url;
       } else {
         toast.error("Unknown error occurred");
       }
