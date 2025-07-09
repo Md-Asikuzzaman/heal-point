@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const orderFormSchema = z.object({
-  fullname: z.string().min(2, {
+  fullName: z.string().min(2, {
     message: "Enter a valid name.",
   }),
   phone: z

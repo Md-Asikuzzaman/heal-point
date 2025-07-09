@@ -7,16 +7,16 @@ import { redirect } from "next/navigation";
 export default async function SettingsPage() {
   const session = await auth();
 
-  if (!session || !session?.user?.id) {
+  if (!session?.user?.id) {
     redirect("/");
   }
 
   const address = await prisma.address.findUnique({
-    where: { userId: session.user.id },
+    where: { userId: session?.user?.id },
   });
 
   const defaultValues = {
-    fullname: address?.fullname ?? "",
+    fullName: address?.fullName ?? "",
     phone: address?.phone ?? "",
     address: address?.address ?? "",
     city: address?.city ?? "",

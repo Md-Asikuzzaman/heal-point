@@ -27,20 +27,20 @@ import OrderPlaceButton from "./OrderPlaceButton";
 import { useSession } from "next-auth/react";
 import ShippingDetailsSkeleton from "./ShippingDetailsSkeleton";
 
-const ShippingDetailsForm = () => {
+type orderFormType = z.infer<typeof orderFormSchema>;
+
+interface Props {
+  defaultValues: orderFormType;
+}
+
+const ShippingDetailsForm = ({ defaultValues }: Props) => {
   const [isPending, startTransition] = useTransition();
   const { cart, clearCart } = useCartStore();
   const { data: isLoggedIn, status } = useSession();
 
   const form = useForm<z.infer<typeof orderFormSchema>>({
     resolver: zodResolver(orderFormSchema),
-    defaultValues: {
-      fullName: "",
-      phone: "",
-      address: "",
-      city: "",
-      zipCode: "",
-    },
+    defaultValues,
   });
 
   function onSubmit(values: z.infer<typeof orderFormSchema>) {

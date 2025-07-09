@@ -2,11 +2,11 @@
 
 model Address {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  fullname  String
-  phone     String
-  address   String
-  city      String
-  zipCode   String
+  fullName  String?
+  phone     String?
+  address   String?
+  city      String?
+  zipCode   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

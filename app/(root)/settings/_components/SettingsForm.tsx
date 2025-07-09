@@ -70,7 +70,7 @@ export default function SettingsForm({ defaultValues }: Props) {
             {/* Fullname */}
             <FormField
               control={form.control}
-              name="fullname"
+              name="fullName"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
