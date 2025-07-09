@@ -99,6 +99,7 @@ export const ProductCard = ({ ...product }: Props) => {
           <div className="flex items-center gap-3">
             <div className="flex items-center border rounded-full p-1.5 gap-3 bg-white shadow-sm">
               <button
+                aria-label="decrease quantity"
                 onClick={() => decreaseQuantity(product.id)}
                 className="bg-red-500 hover:bg-red-600 text-white p-1 rounded-full text-sm font-bold"
               >
@@ -108,6 +109,7 @@ export const ProductCard = ({ ...product }: Props) => {
                 {inCart.quantity}
               </span>
               <button
+                aria-label="increase quantity"
                 disabled={inCart.quantity >= 10}
                 onClick={() => increaseQuantity(product.id)}
                 className="bg-green-500 hover:bg-green-600 text-white p-1 rounded-full text-sm font-bold"
