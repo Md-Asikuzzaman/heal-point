@@ -2,10 +2,10 @@ import React from "react";
 import NavbarLogo from "./components/NavbarLogo";
 import NavbarLinks from "./components/NavbarLinks";
 import NavbarSearch from "./components/NavbarSearch";
-import NavbarCartButton from "./components/NavbarCartButton";
 import NavbarProfileDropdown from "./components/NavbarProfileDropdown";
 import { auth } from "@/lib/auth";
 import NavbarMobileMenu from "./components/NavbarMobileMenu";
+import NavbarCartButtonWrapper from "./components/NavbarCartButtonWrapper";
 
 const Header = async () => {
   const session = await auth();
@@ -26,7 +26,7 @@ const Header = async () => {
           <div className="hidden md:block max-w-[400px] grow">
             <NavbarSearch />
           </div>
-          <NavbarCartButton />
+          <NavbarCartButtonWrapper />
           <NavbarProfileDropdown session={session} />
           <div className="flex items-center md:hidden">
             <NavbarMobileMenu />
