@@ -19,7 +19,7 @@ interface Props {
   session: Session | null;
 }
 
-const ProfileDropdown = ({ session }: Props) => {
+const NavbarProfileDropdown = ({ session }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -100,4 +100,4 @@ const ProfileDropdown = ({ session }: Props) => {
   );
 };
 
-export default ProfileDropdown;
+export default NavbarProfileDropdown;

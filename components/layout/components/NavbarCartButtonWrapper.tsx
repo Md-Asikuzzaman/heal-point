@@ -4,7 +4,7 @@ import { ShoppingCart } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const CartIcon = dynamic(() => import("./CartIcon"), {
+const CartIcon = dynamic(() => import("./NavbarCartButton"), {
   ssr: false,
   loading: () => (
     <button
@@ -16,7 +16,7 @@ const CartIcon = dynamic(() => import("./CartIcon"), {
   ),
 });
 
-const ViaCartIcon = () => {
+const NavbarCartButtonWrapper = () => {
   return (
     <Link href="/cart">
       <CartIcon />
@@ -24,4 +24,4 @@ const ViaCartIcon = () => {
   );
 };
 
-export default ViaCartIcon;
+export default NavbarCartButtonWrapper;

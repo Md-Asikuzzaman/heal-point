@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const NavLinks = () => {
+const NavbarLinks = () => {
   const pathname = usePathname();
 
   return (
     <ul>
-      <li className="flex items-center gap-10 font-semibold text-gray-700">
+      <li className="flex flex-col md:flex-row lg:items-center gap-3 md:gap-10 font-semibold text-gray-700">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
           return (
@@ -23,7 +23,6 @@ const NavLinks = () => {
                 isActive
                   ? "text-green-700 font-medium"
                   : "text-gray-600 font-normal",
-                // underline effect using pseudo element
                 "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:scale-x-0 after:bg-green-600 after:origin-bottom-left after:transition-transform after:duration-300",
                 isActive && "after:scale-x-100",
                 !isActive && "hover:after:scale-x-100"
@@ -38,4 +37,4 @@ const NavLinks = () => {
   );
 };
 
-export default NavLinks;
+export default NavbarLinks;

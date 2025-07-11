@@ -3,7 +3,7 @@
 import { useCartStore } from "@/store/useCartStore";
 import { ShoppingCart } from "lucide-react";
 
-const CartIcon = () => {
+const NavbarCartButton = () => {
   const { getTotalItems } = useCartStore();
 
   return (
@@ -23,4 +23,4 @@ const CartIcon = () => {
   );
 };
 
-export default CartIcon;
+export default NavbarCartButton;

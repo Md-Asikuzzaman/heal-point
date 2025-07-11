@@ -13,7 +13,7 @@ const fuse = new Fuse(products, {
   threshold: 0.3,
 });
 
-export default function SearchBar() {
+const NavbarSearch = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<typeof products>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -77,7 +77,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
+    <div className="relative w-full">
       <Input
         ref={inputRef}
         type="text"
@@ -128,4 +128,6 @@ export default function SearchBar() {
       )}
     </div>
   );
-}
+};
+
+export default NavbarSearch;

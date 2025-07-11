@@ -1,37 +1,38 @@
-export const dynamic = "force-dynamic";
-
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import SearchBar from "./components/SearchBar";
-import Container from "../shared/Container";
-import NavLinks from "./components/NavLinks";
-import ViaCartIcon from "./components/ViaCartIcon";
-import ProfileDropdown from "./components/ProfileDropdown";
+import NavbarLogo from "./components/NavbarLogo";
+import NavbarLinks from "./components/NavbarLinks";
+import NavbarSearch from "./components/NavbarSearch";
+import NavbarCartButton from "./components/NavbarCartButton";
+import NavbarProfileDropdown from "./components/NavbarProfileDropdown";
 import { auth } from "@/lib/auth";
+import NavbarMobileMenu from "./components/NavbarMobileMenu";
 
 const Header = async () => {
   const session = await auth();
 
   return (
-    <header className="bg-white py-2.5 sticky top-0 shadow-lg z-50">
-      <Container className="flex items-center justify-between">
-        <Link href="/">
-          <Image
-            src="/images/logo.jpg"
-            alt="VitalEdge Pharmacy"
-            height={75}
-            width={75}
-            className="rounded-full shadow-2xl border-2 border-green-500"
-          />
-        </Link>
-        <NavLinks />
-        <div className="w-full max-w-md flex items-center gap-4">
-          <SearchBar />
-          <ViaCartIcon />
-          <ProfileDropdown session={session} />
+    <header className="sticky top-0 z-50 w-full bg-white shadow-md">
+      <nav className="flex items-center px-4 py-3 md:px-6">
+        {/* Left: Logo + Links */}
+        <div className="flex items-center md:gap-8 lg:gap-14">
+          <NavbarLogo />
+          <div className="hidden md:block">
+            <NavbarLinks />
+          </div>
         </div>
-      </Container>
+
+        {/* Right: Search, Cart, Profile, Mobile Menu */}
+        <div className="flex items-center gap-3 grow justify-end">
+          <div className="hidden md:block max-w-[400px] grow">
+            <NavbarSearch />
+          </div>
+          <NavbarCartButton />
+          <NavbarProfileDropdown session={session} />
+          <div className="flex items-center md:hidden">
+            <NavbarMobileMenu />
+          </div>
+        </div>
+      </nav>
     </header>
   );
 };
