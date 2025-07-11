@@ -1,16 +1,14 @@
-import { NextPage } from "next";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "./_components/app-sidebar";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const Layout: NextPage<Props> = ({ children }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      admin header
-      {children}
-    </>
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="w-full">
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   );
-};
-
-export default Layout;
+}
