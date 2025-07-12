@@ -29,6 +29,7 @@ import axios from "axios";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 type Order = {
   id: string;
@@ -37,6 +38,7 @@ type Order = {
   address: string;
   city: string;
   zipCode: string;
+  createdAt: string;
   items: {
     productId: string;
     title: string;
@@ -83,6 +85,24 @@ export default function OrderTable() {
 
   // Columns name
   const columns: ColumnDef<Order>[] = [
+    {
+      accessorKey: "createdAt",
+      header: "Order Date/Time",
+      cell: ({ row }) => {
+        const date = dayjs(row.original.createdAt);
+        const dayName = date.format("dddd"); // e.g. Sunday
+        const datePart = date.format("DD MMM YYYY"); // 12 Jul 2025
+        const timePart = date.format("h:mm A"); // 3:45 PM
+
+        return (
+          <div className="text-sm leading-5 space-y-0.5">
+            <div className="font-medium text-gray-900">{dayName}</div>
+            <div className="text-gray-600">{datePart}</div>
+            <div className="text-gray-500">{timePart}</div>
+          </div>
+        );
+      },
+    },
     {
       accessorKey: "fullName",
       header: "Name",
