@@ -1,9 +1,13 @@
-import OrderTable from '../../_components/OrderTable';
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import OrderTable from "../../_components/OrderTable";
 
 export default function OrdersPage() {
   return (
-    <div>
-      <OrderTable />
-    </div>
+    <Card>
+      <CardHeader>Order Table</CardHeader>
+      <CardContent>
+        <OrderTable />
+      </CardContent>
+    </Card>
   );
 }
