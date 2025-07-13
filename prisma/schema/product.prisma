@@ -6,8 +6,8 @@ model Product {
   image            String
   brand            String
   medicineType     String
-  medicineQuantity String
-  rating           Float
+  medicineQuantity String?
+  rating           Float?
   description      String
 
   @@map("products")

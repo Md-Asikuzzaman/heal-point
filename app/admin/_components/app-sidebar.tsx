@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Calendar,
   ChevronUp,
@@ -26,6 +28,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // Menu items.
 const items = [
@@ -40,23 +44,29 @@ const items = [
     icon: Inbox,
   },
   {
+    title: "Add Product",
+    url: "/admin/product",
+    icon: Inbox,
+  },
+  {
     title: "Calendar",
-    url: "/admin",
+    url: "/admin/calendar",
     icon: Calendar,
   },
   {
     title: "Search",
-    url: "/admin",
+    url: "/admin/search",
     icon: Search,
   },
   {
     title: "Settings",
-    url: "/admin",
+    url: "/admin/settings",
     icon: Settings,
   },
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname();
   return (
     <Sidebar>
       <SidebarContent>
@@ -66,7 +76,13 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    className={cn(
+                      pathname === item.url &&
+                        "bg-slate-900 hover:bg-slate-900 text-white hover:text-white"
+                    )}
+                  >
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
