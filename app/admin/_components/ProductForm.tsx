@@ -91,8 +91,6 @@ const ProductForm = ({ product }: Props) => {
     },
     onSuccess: () => {
       toast.success("Product updated successfully!");
-      form.reset();
-      setPreviewImage(null);
       queryClient.invalidateQueries({ queryKey: ["get-orders"] });
     },
   });

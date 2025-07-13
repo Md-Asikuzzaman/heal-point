@@ -89,6 +89,7 @@ export default function ProductTable() {
         return (
           <div className="flex gap-2">
             <Button
+              disabled={deletingId === product.id}
               size="sm"
               variant="outline"
               onClick={() => router.push(`/admin/product/${product.id}`)}

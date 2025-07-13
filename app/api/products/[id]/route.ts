@@ -1,5 +1,8 @@
+import { productSchema } from "@/app/admin/_components/ProductForm";
 import { prisma } from "@/lib/prisma";
+import { Product } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import z from "zod";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -23,6 +26,32 @@ export async function DELETE(
     await prisma.product.delete({ where: { id } });
 
     return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { success: false, error: "Failed to process request" },
+      { status: 500 }
+    );
+  }
+}
+
+type ProductSchema = z.infer<typeof productSchema>;
+
+// UPDATE API Endpoint
+export async function PATCH(
+  req: NextRequest,
+  ctx: Params
+): Promise<NextResponse<ApiResponse<Product>>> {
+  try {
+    const { id } = await ctx.params;
+
+    const data: ProductSchema = await req.json();
+    const updatedData = await prisma.product.update({ where: { id }, data });
+
+    return NextResponse.json(
+      { success: true, data: updatedData },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
