@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Product } from "@prisma/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ColumnDef,
@@ -29,187 +30,118 @@ import axios from "axios";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import dayjs from "dayjs";
 
-type Order = {
-  id: string;
-  fullName: string;
-  phone: string;
-  address: string;
-  city: string;
-  zipCode: string;
-  createdAt: string;
-  items: {
-    productId: string;
-    title: string;
-    image: string;
-    quantity: number;
-    price: number;
-    brand: string;
-  }[];
-};
-
-// API response type
-type OrderApiResponse = {
+type ProductApiResponse = {
   success: boolean;
-  data: Order[];
+  data: Product[];
 };
 
-export default function OrderTable() {
+export default function ProductTable() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState({});
   const [deletingId, setDeletingId] = useState<string | null>(null);
-
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["get-orders"],
+    queryKey: ["get-products"],
     queryFn: async () => {
-      const res = await axios.get("/api/orders");
-      const result: OrderApiResponse = await res.data;
+      const res = await axios.get("/api/products");
+      const result: ProductApiResponse = await res.data;
       if (result.success) {
         return result.data;
       }
     },
   });
 
+  const columns: ColumnDef<Product>[] = [
+    {
+      accessorKey: "title",
+      header: "Title",
+    },
+
+    {
+      accessorKey: "image",
+      header: "Image",
+      cell: ({ row }) => {
+        const src = row.original.image;
+        return (
+          <Image
+            src={src}
+            alt={row.original.title}
+            height={48}
+            width={48}
+            className="h-12 w-12 rounded object-cover border"
+          />
+        );
+      },
+    },
+    {
+      accessorKey: "brand",
+      header: "Brand",
+    },
+    {
+      accessorKey: "price",
+      header: "Price (৳)",
+      cell: ({ row }) => <>৳ {row.original.price}</>,
+    },
+    {
+      accessorKey: "medicineType",
+      header: "Type",
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const product = row.original;
+
+        return (
+          <div className="flex gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => alert(`Edit ${product.id}`)}
+            >
+              ✏️ Edit
+            </Button>
+
+            <Button
+              disabled={deletingId === product.id}
+              onClick={() => {
+                if (
+                  window.confirm(
+                    "Are you sure you want to delete this product?"
+                  )
+                ) {
+                  mutate(product.id);
+                }
+              }}
+              size="sm"
+              variant="destructive"
+            >
+              {deletingId === product.id ? "🗑️ Deleting..." : " 🗑️ Delete"}
+            </Button>
+          </div>
+        );
+      },
+    },
+  ];
+
   const { mutate } = useMutation({
-    mutationKey: ["delete-order"],
+    mutationKey: ["delete-product"],
     mutationFn: async (id: string) => {
       setDeletingId(id);
-      const res = await axios.delete(`/api/orders/${id}`);
+      const res = await axios.delete(`/api/products/${id}`);
       return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+      queryClient.invalidateQueries({ queryKey: ["get-products"] });
     },
     onSettled: () => {
       setDeletingId(null);
     },
   });
 
-  // Columns name
-  const columns: ColumnDef<Order>[] = [
-    {
-      accessorKey: "createdAt",
-      header: "Order Date/Time",
-      cell: ({ row }) => {
-        const date = dayjs(row.original.createdAt);
-        const dayName = date.format("dddd"); // e.g. Sunday
-        const datePart = date.format("DD MMM YYYY"); // 12 Jul 2025
-        const timePart = date.format("h:mm A"); // 3:45 PM
-
-        return (
-          <div className="text-sm leading-5 space-y-0.5">
-            <div className="font-medium text-gray-900">{dayName}</div>
-            <div className="text-gray-600">{datePart}</div>
-            <div className="text-gray-500">{timePart}</div>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "fullName",
-      header: "Name",
-    },
-    {
-      accessorKey: "phone",
-      header: "Phone",
-    },
-    {
-      accessorKey: "city",
-      header: "City",
-    },
-    {
-      accessorKey: "zipCode",
-      header: "Zip Code",
-    },
-
-    {
-      accessorKey: "address",
-      header: "Address",
-    },
-
-    {
-      id: "items",
-      header: "Products",
-      cell: ({ row }) => {
-        const items = row.original.items;
-
-        return (
-          <ul className="space-y-3">
-            {items.map((item, idx) => (
-              <li key={idx} className="flex items-center gap-2 text-sm">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  className="w-10 h-10 object-cover rounded border"
-                  width={40}
-                  height={40}
-                />
-                <div>
-                  <div className="font-medium">{item.title}</div>
-                  <div className="text-xs text-gray-500">
-                    Brand: {item.brand} — Qty: {item.quantity}
-                  </div>
-                  <div className="text-xs text-gray-700">
-                    ৳{item.price} × {item.quantity} ={" "}
-                    <span className="font-semibold">
-                      ৳{item.price * item.quantity}
-                    </span>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        );
-      },
-    },
-    {
-      id: "total",
-      header: "Total",
-      cell: ({ row }) => {
-        const items = row.original.items;
-        const total = items.reduce(
-          (sum, item) => sum + item.price * item.quantity,
-          0
-        );
-
-        return (
-          <span className="font-semibold text-green-600">
-            ৳{total.toFixed(2)}
-          </span>
-        );
-      },
-    },
-
-    {
-      id: "actions",
-      header: "Actions",
-      cell: ({ row }) => {
-        const order = row.original;
-
-        return (
-          <Button
-            disabled={deletingId === order.id}
-            onClick={() => {
-              if (
-                window.confirm("Are you sure you want to delete this order?")
-              ) {
-                mutate(order.id);
-              }
-            }}
-            size="sm"
-            variant="destructive"
-          >
-            {deletingId === order.id ? "🗑️ Deleting..." : " 🗑️ Delete"}
-          </Button>
-        );
-      },
-    },
-  ];
-
-  const table = useReactTable<Order>({
+  const table = useReactTable<Product>({
     data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -234,7 +166,7 @@ export default function OrderTable() {
         {/* Search bar */}
         <Input
           type="text"
-          placeholder="Search orders..."
+          placeholder="Search products..."
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
           className="w-full max-w-sm px-4 py-2 border rounded-md shadow"
@@ -267,7 +199,7 @@ export default function OrderTable() {
 
       {isLoading ? (
         <div className="text-center py-10 text-muted-foreground">
-          Loading orders...
+          Loading products...
         </div>
       ) : data && data?.length > 0 ? (
         <>
@@ -328,7 +260,7 @@ export default function OrderTable() {
         </>
       ) : (
         <div className="text-center py-10 text-muted-foreground">
-          No orders found!
+          No products found!
         </div>
       )}
     </div>

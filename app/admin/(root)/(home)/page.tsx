@@ -1,5 +1,13 @@
-import React from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import ProductTable from "../../_components/ProductTable";
 
 export default function HomePage() {
-  return <div>Admin</div>;
+  return (
+    <Card>
+      <CardHeader>Products Table</CardHeader>
+      <CardContent>
+        <ProductTable />
+      </CardContent>
+    </Card>
+  );
 }
