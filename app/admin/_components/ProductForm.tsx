@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -22,6 +22,7 @@ import Image from "next/image";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import SubmitButton from "@/app/auth/_components/SubmitButton";
+import { Product } from "@prisma/client";
 
 export const productSchema = z.object({
   title: z.string().min(2, "Title is required"),
@@ -34,34 +35,62 @@ export const productSchema = z.object({
 
 type ProductSchema = z.infer<typeof productSchema>;
 
-const ProductForm = () => {
+interface Props {
+  product?: Product;
+}
+
+const ProductForm = ({ product }: Props) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const form = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      title: "",
-      brand: "",
-      price: 0,
-      image: "",
-      medicineType: "",
-      description: "",
+      title: product?.title ?? "",
+      brand: product?.brand ?? "",
+      price: product?.price ?? 0,
+      image: product?.image ?? "",
+      medicineType: product?.medicineType ?? "",
+      description: product?.description ?? "",
     },
   });
 
+  useEffect(() => {
+    if (product) setPreviewImage(product.image);
+  }, [product]);
+
   const onSubmit = (data: ProductSchema) => {
-    mutate(data);
+    if (product) {
+      updateOrder(data);
+    } else {
+      addOrder(data);
+    }
   };
 
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["delete-order"],
+  // Add Order Mutation
+  const { mutate: addOrder, isPending: addOrderPending } = useMutation({
+    mutationKey: ["add-order"],
     mutationFn: async (data: ProductSchema) => {
       const res = await axios.post(`/api/products`, data);
       return res.data;
     },
     onSuccess: () => {
       toast.success("Product added successfully!");
+      form.reset();
+      setPreviewImage(null);
+      queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    },
+  });
+
+  // Update Order Mutation
+  const { mutate: updateOrder, isPending: updateOrderPending } = useMutation({
+    mutationKey: ["update-order"],
+    mutationFn: async (data: ProductSchema) => {
+      const res = await axios.patch(`/api/products/${product?.id}`, data);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Product updated successfully!");
       form.reset();
       setPreviewImage(null);
       queryClient.invalidateQueries({ queryKey: ["get-orders"] });
@@ -83,7 +112,9 @@ const ProductForm = () => {
 
   return (
     <div className="max-w-xl mx-auto p-6 border rounded-xl shadow-sm bg-white">
-      <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
+      <h2 className="text-xl font-semibold mb-4">
+        {product ? "Update Product" : "Add Product"}
+      </h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Title */}
@@ -198,9 +229,9 @@ const ProductForm = () => {
           />
 
           <SubmitButton
-            text="Add Product"
-            loadingText="Adding..."
-            isPending={isPending}
+            text={product ? "Update Product" : "Add Product"}
+            loadingText={product ? "Updating..." : "Adding..."}
+            isPending={addOrderPending || updateOrderPending}
           />
         </form>
       </Form>

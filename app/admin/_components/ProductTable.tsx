@@ -29,6 +29,7 @@ import {
 import axios from "axios";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -42,6 +43,7 @@ export default function ProductTable() {
   const [columnVisibility, setColumnVisibility] = useState({});
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const columns: ColumnDef<Product>[] = [
     {
@@ -89,7 +91,7 @@ export default function ProductTable() {
             <Button
               size="sm"
               variant="outline"
-              onClick={() => alert(`Edit ${product.id}`)}
+              onClick={() => router.push(`/admin/product/${product.id}`)}
             >
               ✏️ Edit
             </Button>
