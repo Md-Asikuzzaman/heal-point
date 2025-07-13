@@ -30,6 +30,7 @@ import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import dayjs from "dayjs";
+import { toast } from "sonner";
 
 type Order = {
   id: string;
@@ -59,34 +60,7 @@ export default function OrderTable() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState({});
   const [deletingId, setDeletingId] = useState<string | null>(null);
-
   const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["get-orders"],
-    queryFn: async () => {
-      const res = await axios.get("/api/orders");
-      const result: OrderApiResponse = await res.data;
-      if (result.success) {
-        return result.data;
-      }
-    },
-  });
-
-  const { mutate } = useMutation({
-    mutationKey: ["delete-order"],
-    mutationFn: async (id: string) => {
-      setDeletingId(id);
-      const res = await axios.delete(`/api/orders/${id}`);
-      return res.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get-orders"] });
-    },
-    onSettled: () => {
-      setDeletingId(null);
-    },
-  });
 
   // Columns name
   const columns: ColumnDef<Order>[] = [
@@ -208,6 +182,33 @@ export default function OrderTable() {
       },
     },
   ];
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["get-orders"],
+    queryFn: async () => {
+      const res = await axios.get("/api/orders");
+      const result: OrderApiResponse = await res.data;
+      if (result.success) {
+        return result.data;
+      }
+    },
+  });
+
+  const { mutate } = useMutation({
+    mutationKey: ["delete-order"],
+    mutationFn: async (id: string) => {
+      setDeletingId(id);
+      const res = await axios.delete(`/api/orders/${id}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Order deleted successfully!");
+      queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    },
+    onSettled: () => {
+      setDeletingId(null);
+    },
+  });
 
   const table = useReactTable<Order>({
     data: data || [],

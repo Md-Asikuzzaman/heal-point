@@ -30,6 +30,7 @@ import axios from "axios";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type ProductApiResponse = {
   success: boolean;
@@ -41,17 +42,6 @@ export default function ProductTable() {
   const [columnVisibility, setColumnVisibility] = useState({});
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["get-products"],
-    queryFn: async () => {
-      const res = await axios.get("/api/products");
-      const result: ProductApiResponse = await res.data;
-      if (result.success) {
-        return result.data;
-      }
-    },
-  });
 
   const columns: ColumnDef<Product>[] = [
     {
@@ -126,6 +116,17 @@ export default function ProductTable() {
     },
   ];
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["get-products"],
+    queryFn: async () => {
+      const res = await axios.get("/api/products");
+      const result: ProductApiResponse = await res.data;
+      if (result.success) {
+        return result.data;
+      }
+    },
+  });
+
   const { mutate } = useMutation({
     mutationKey: ["delete-product"],
     mutationFn: async (id: string) => {
@@ -134,6 +135,7 @@ export default function ProductTable() {
       return res.data;
     },
     onSuccess: () => {
+      toast.success("Product deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["get-products"] });
     },
     onSettled: () => {
