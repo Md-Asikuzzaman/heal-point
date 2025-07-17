@@ -51,9 +51,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductDetailsPage({ params }: Props) {
   const { slug } = await params;
 
-  const res = await fetch(`http://localhost:3000/api/products/${slug}`, {
-    cache: "no-cache",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/products/${slug}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
 
   const product: ProductApiResponse = await res.json();
 
