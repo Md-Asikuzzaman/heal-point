@@ -123,13 +123,14 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
   ];
 
   return (
-    <div className="border p-1 mb-1 bg-slate-50 space-x-2 z-20">
+    <div className="border p-1 mb-1 space-x-2 z-20 rounded-sm">
       {options.map((option, index) => (
         <Toggle
           key={index}
           onPressedChange={option.onClick}
           pressed={option.pressed}
-          variant="default"
+          variant="outline"
+          className={`bg-white text-black hover:bg-zinc-100 data-[state=on]:bg-zinc-300`}
         >
           {option.icon}
         </Toggle>
