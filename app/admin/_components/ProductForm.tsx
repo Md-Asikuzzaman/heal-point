@@ -23,16 +23,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import SubmitButton from "@/app/auth/_components/SubmitButton";
 import { Product } from "@prisma/client";
-
-export const productSchema = z.object({
-  title: z.string().min(2, "Title is required"),
-  brand: z.string().min(2, "Brand is required"),
-  price: z.coerce.number().gt(0, "Price must be greater than 0"),
-  image: z.string().min(1, "Image is required"),
-  medicineType: z.string().min(2, "Type is required"),
-  medicineQuantity: z.string().min(2, "Quantity is required"),
-  description: z.string().min(5, "Description is required"),
-});
+import { productSchema } from "@/schema";
 
 type ProductSchema = z.infer<typeof productSchema>;
 

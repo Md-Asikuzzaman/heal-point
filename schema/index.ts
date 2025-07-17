@@ -41,3 +41,14 @@ export const registerSchema = z.object({
   }),
 });
 
+
+export const productSchema = z.object({
+  title: z.string().min(2, "Title is required"),
+  brand: z.string().min(2, "Brand is required"),
+  price: z.coerce.number().gt(0, "Price must be greater than 0"),
+  image: z.string().min(1, "Image is required"),
+  medicineType: z.string().min(2, "Type is required"),
+  medicineQuantity: z.string().min(2, "Quantity is required"),
+  description: z.string().min(5, "Description is required"),
+});
+

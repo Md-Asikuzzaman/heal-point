@@ -1,32 +1,52 @@
-import { productSchema } from "@/app/admin/_components/ProductForm";
+import { auth } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
 import { prisma } from "@/lib/prisma";
+import { productSchema } from "@/schema";
 import { Product } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import slugify from "slugify";
-import z from "zod";
 
-// Define specific response types
 interface ApiResponse<T> {
   success: boolean;
   data?: T;
   error?: string;
 }
 
-type ProductSchema = z.infer<typeof productSchema>;
-
-// POST Request - Create a product
+/**
+ * @route POST /api/products
+ * @desc Create a new product
+ */
 export async function POST(
   req: NextRequest
 ): Promise<NextResponse<ApiResponse<Product>>> {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json(
+      { success: false, error: "Unauthorized access." },
+      { status: 401 }
+    );
+  }
+
   try {
-    const data: ProductSchema = await req.json();
+    const body = await req.json();
+    const result = productSchema.safeParse(body);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: "Invalid product data." },
+        { status: 400 }
+      );
+    }
+
+    const data = result.data;
     const slug = slugify(data.title, { lower: true, strict: true });
 
+    // Upload Image to Cloudinary
     const uploaded = await cloudinary.uploader.upload(data.image, {
       folder: "products",
     });
 
+    // Save Product to Database
     const product = await prisma.product.create({
       data: {
         ...data,
@@ -37,23 +57,27 @@ export async function POST(
 
     return NextResponse.json({ success: true, data: product }, { status: 200 });
   } catch (error) {
-    console.error(error);
+    console.error("[PRODUCT_POST_ERROR]", error);
     return NextResponse.json(
-      { success: false, error: "Failed to create product" },
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
   }
 }
 
-// GET Request - Returns a list of products
+/**
+ * @route GET /api/products
+ * @desc Get all products
+ */
 export async function GET(): Promise<NextResponse<ApiResponse<Product[]>>> {
   try {
     const products = await prisma.product.findMany();
+
     return NextResponse.json({ success: true, data: products });
-  } catch (error: unknown) {
-    console.error(error);
+  } catch (error) {
+    console.error("[PRODUCT_GET_ERROR]", error);
     return NextResponse.json(
-      { success: false, error: "Failed to fetch products" },
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
   }
