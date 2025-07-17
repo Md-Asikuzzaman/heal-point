@@ -39,7 +39,11 @@ const NavbarSearch = () => {
     // Debounced search function
     const debouncedSearch = debounce(async () => {
       try {
-        const res = await fetch(`/api/products?q=${encodeURIComponent(query)}`);
+        const res = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_SITE_URL
+          }/api/products?q=${encodeURIComponent(query)}`
+        );
         const json: ApiResponse = await res.json();
         setResults(json.data);
         setActiveIndex(0);

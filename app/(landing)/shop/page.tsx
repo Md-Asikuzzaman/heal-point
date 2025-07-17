@@ -11,7 +11,7 @@ type ProductsApiResponse = {
 };
 
 export default async function Shop() {
-  const res = await fetch("http://localhost:3000/api/products", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/products`, {
     next: { revalidate: 60 },
   });
   const products: ProductsApiResponse = await res.json();

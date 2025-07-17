@@ -16,9 +16,12 @@ type ProductApiResponse = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const res = await fetch(`http://localhost:3000/api/products/${slug}`, {
-    cache: "no-cache",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/products/${slug}`,
+    {
+      cache: "no-cache",
+    }
+  );
 
   const { data: product }: ProductApiResponse = await res.json();
 
