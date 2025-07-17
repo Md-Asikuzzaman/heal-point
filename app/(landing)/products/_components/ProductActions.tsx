@@ -1,23 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
+import { Product } from "@prisma/client";
+import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-interface Props {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  brand: string;
-  medicineType: string;
-  medicineQuantity: string;
-  description: string;
-  rating: number;
-}
-
-export default function ProductActions({ ...product }: Props) {
+export default function ProductActions(product: Product) {
   const [quantity, setQuantity] = useState(1);
   const { cart, addToCart } = useCartStore();
 

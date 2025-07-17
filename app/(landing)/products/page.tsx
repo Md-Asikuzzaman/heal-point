@@ -3,7 +3,7 @@ import Heading from "@/components/shared/Heading";
 import { ProductCard } from "@/components/shared/ProductCard";
 import { products } from "@/constants";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
   return (
     <section className="mt-12 px-4">
       <Container className="bg-white py-10 px-6 sm:px-10 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">

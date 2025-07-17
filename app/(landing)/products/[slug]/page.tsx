@@ -1,27 +1,29 @@
-import { products } from "@/constants";
+import { Product } from "@prisma/client";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ProjectDetailsCard from "../_components/ProjectDetailsCard";
-import slugify from "slugify";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
+type ProductApiResponse = {
+  success: boolean;
+  data: Product;
+};
+
 // generateMetadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const product = products.find(({ title }) => {
-    const slugs = slugify(title, { lower: true, strict: true });
-    return slugs === slug;
+  const res = await fetch(`http://localhost:3000/api/products/${slug}`, {
+    cache: "no-cache",
   });
 
+  const { data: product }: ProductApiResponse = await res.json();
+
   if (!product) {
-    return {
-      title: "Product Not Found",
-      description: "This product does not exist.",
-    };
+    redirect("/products");
   }
 
   return {
@@ -45,10 +47,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductDetailsPage({ params }: Props) {
   const { slug } = await params;
 
-  const product = products.find(({ title }) => {
-    const slugs = slugify(title, { lower: true, strict: true });
-    return slugs === slug;
+  const res = await fetch(`http://localhost:3000/api/products/${slug}`, {
+    cache: "no-cache",
   });
+
+  const product: ProductApiResponse = await res.json();
 
   if (!product) {
     redirect("/products");
@@ -56,7 +59,7 @@ export default async function ProductDetailsPage({ params }: Props) {
 
   return (
     <>
-      <ProjectDetailsCard {...product} />
+      <ProjectDetailsCard {...product.data} />
     </>
   );
 }

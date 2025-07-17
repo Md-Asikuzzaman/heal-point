@@ -17,8 +17,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
-// import { toast } from "sonner";
-
 import { z } from "zod";
 
 import { triggerConfetti } from "@/lib/confetti";
@@ -45,7 +43,6 @@ const ShippingDetailsForm = ({ defaultValues }: Props) => {
 
   function onSubmit(values: z.infer<typeof orderFormSchema>) {
     try {
-      console.log(values);
 
       if (cart.length > 0) {
         startTransition(async () => {

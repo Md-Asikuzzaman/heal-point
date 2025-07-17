@@ -1,9 +1,14 @@
+import { Product } from "@prisma/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+type ProductStoreType = Product & {
+  quantity: number;
+};
+
 type CartStore = {
-  cart: CartProductType[];
-  addToCart: (product: CartProductType) => void;
+  cart: ProductStoreType[];
+  addToCart: (product: ProductStoreType) => void;
   removeFromCart: (id: string) => void;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;

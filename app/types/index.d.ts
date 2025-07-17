@@ -17,8 +17,8 @@ type CartProductType = {
   image: string;
   brand: string;
   medicineType: string;
-  medicineQuantity: string;
-  rating: number;
+  medicineQuantity: string | null;
+  rating: number | null;
   quantity: number;
   description: string;
 };

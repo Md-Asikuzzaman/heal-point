@@ -2,6 +2,7 @@ import { productSchema } from "@/app/admin/_components/ProductForm";
 import { prisma } from "@/lib/prisma";
 import { Product } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import slugify from "slugify";
 import z from "zod";
 
 interface ApiResponse<T> {
@@ -58,5 +59,22 @@ export async function PATCH(
       { success: false, error: "Failed to process request" },
       { status: 500 }
     );
+  }
+}
+
+export async function GET(req: NextRequest, ctx: Params) {
+  try {
+    const { id } = await ctx.params;
+    const slug = slugify(id, { lower: true, strict: true });
+
+    const product = await prisma.product.findFirst({
+      where: {
+        slug,
+      },
+    });
+
+    return NextResponse.json({ success: true, data: product }, { status: 200 });
+  } catch (error) {
+    console.log(error);
   }
 }

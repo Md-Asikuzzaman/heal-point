@@ -30,6 +30,7 @@ export const productSchema = z.object({
   price: z.coerce.number().gt(0, "Price must be greater than 0"),
   image: z.string().min(1, "Image is required"),
   medicineType: z.string().min(2, "Type is required"),
+  medicineQuantity: z.string().min(2, "Quantity is required"),
   description: z.string().min(5, "Description is required"),
 });
 
@@ -51,6 +52,7 @@ const ProductForm = ({ product }: Props) => {
       price: product?.price ?? 0,
       image: product?.image ?? "",
       medicineType: product?.medicineType ?? "",
+      medicineQuantity: product?.medicineQuantity ?? "",
       description: product?.description ?? "",
     },
   });
@@ -109,7 +111,7 @@ const ProductForm = ({ product }: Props) => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 border rounded-xl shadow-sm bg-white">
+    <div className="w-full p-6 border rounded-xl shadow-sm bg-white">
       <h2 className="text-xl font-semibold mb-4">
         {product ? "Update Product" : "Add Product"}
       </h2>
@@ -219,7 +221,22 @@ const ProductForm = ({ product }: Props) => {
               <FormItem>
                 <FormLabel>Medicine Type</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. Tablet, Capsule" {...field} />
+                  <Input placeholder="e.g. Tablet, Capsule, Syrup" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Medicine Quantity */}
+          <FormField
+            control={form.control}
+            name="medicineQuantity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Medicine Quantity</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. 500 ml, 10 pieces" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

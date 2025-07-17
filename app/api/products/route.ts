@@ -2,6 +2,7 @@ import { productSchema } from "@/app/admin/_components/ProductForm";
 import { prisma } from "@/lib/prisma";
 import { Product } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import slugify from "slugify";
 import z from "zod";
 
 // Define specific response types
@@ -19,10 +20,14 @@ export async function POST(
 ): Promise<NextResponse<ApiResponse<Product>>> {
   try {
     const data: ProductSchema = await req.json();
+    const slug = slugify(data.title, { lower: true, strict: true });
 
-    console.log("📦 Received Product Data:", data);
-
-    const product = await prisma.product.create({ data });
+    const product = await prisma.product.create({
+      data: {
+        ...data,
+        slug,
+      },
+    });
 
     return NextResponse.json({ success: true, data: product }, { status: 200 });
   } catch (error) {

@@ -8,20 +8,9 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { useRouter } from "next/navigation";
 import slugify from "slugify";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { Product } from "@prisma/client";
 
-interface Props {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  brand: string;
-  medicineType: string;
-  medicineQuantity: string;
-  rating: number;
-  description: string;
-}
-
-export const ProductCard = ({ ...product }: Props) => {
+export const ProductCard = ({ ...product }: Product) => {
   const router = useRouter();
   const { title, price, image, rating } = product;
   const {
@@ -77,8 +66,8 @@ export const ProductCard = ({ ...product }: Props) => {
             ৳{price.toFixed(2)}
           </p>
           <div className="flex items-center gap-0.5 text-yellow-500 text-sm">
-            {Array.from({ length: rating }).map((_, i) => (
-              <FaStar key={i} aria-label='star'/>
+            {Array.from({ length: rating ?? 5 }).map((_, i) => (
+              <FaStar key={i} aria-label="star" />
             ))}
           </div>
         </div>
