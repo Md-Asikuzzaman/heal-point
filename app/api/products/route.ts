@@ -42,12 +42,8 @@ export async function POST(
 // GET Request - Returns a list of products
 export async function GET(): Promise<NextResponse<ApiResponse<Product[]>>> {
   try {
-    const products = await prisma.product.findMany({});
-
-    return NextResponse.json(
-      { success: true, data: products },
-      { status: 200 }
-    );
+    const products = await prisma.product.findMany();
+    return NextResponse.json({ success: true, data: products });
   } catch (error: unknown) {
     console.error(error);
     return NextResponse.json(

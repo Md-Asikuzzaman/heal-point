@@ -1,21 +1,27 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
-import { products } from "@/constants";
+import debounce from "lodash.debounce";
 import { Search } from "lucide-react";
-import Fuse from "fuse.js";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 import slugify from "slugify";
 
-const fuse = new Fuse(products, {
-  keys: ["title", "brand", "medicineType"],
-  threshold: 0.3,
-});
+interface SearchType {
+  id: string;
+  title: string;
+  slug: string;
+  price: number;
+}
+
+interface ApiResponse {
+  success: boolean;
+  data: SearchType[];
+}
 
 const NavbarSearch = () => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<typeof products>([]);
+  const [results, setResults] = useState<SearchType[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,9 +35,25 @@ const NavbarSearch = () => {
       setActiveIndex(-1);
       return;
     }
-    const matched = fuse.search(query).map((res) => res.item);
-    setResults(matched);
-    setActiveIndex(0);
+
+    // Debounced search function
+    const debouncedSearch = debounce(async () => {
+      try {
+        const res = await fetch(`/api/products?q=${encodeURIComponent(query)}`);
+        const json: ApiResponse = await res.json();
+        setResults(json.data);
+        setActiveIndex(0);
+      } catch (err) {
+        console.error("Error fetching:", err);
+      }
+    }, 300);
+
+    debouncedSearch();
+
+    // Cleanup debounce on unmount or query change
+    return () => {
+      debouncedSearch.cancel();
+    };
   }, [query]);
 
   useEffect(() => {

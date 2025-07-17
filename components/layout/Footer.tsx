@@ -8,6 +8,8 @@ import {
 import Container from "../shared/Container";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
+import { BsWhatsapp } from "react-icons/bs";
+
 const Footer = () => {
   return (
     <footer className="bg-green-900 text-gray-200">
@@ -53,6 +55,7 @@ const Footer = () => {
                 <FaMapMarkerAlt className="mt-1 text-green-400" />
                 <span>{contactInfo.address}</span>
               </li>
+
               <li className="flex items-center gap-2">
                 <FaPhoneAlt className="text-green-400" />
                 <a
@@ -62,6 +65,18 @@ const Footer = () => {
                   {contactInfo.phone}
                 </a>
               </li>
+
+              <li className="flex items-center gap-2">
+                <BsWhatsapp className="text-green-400" />
+
+                <a
+                  href={`https://wa.me/${contactInfo.whatsapp}`}
+                  className="hover:text-white"
+                >
+                  {contactInfo.whatsapp}
+                </a>
+              </li>
+
               <li className="flex items-center gap-2">
                 <FaEnvelope className="text-green-400" />
                 <a

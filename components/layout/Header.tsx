@@ -1,11 +1,10 @@
-import React from "react";
-import NavbarLogo from "./components/NavbarLogo";
-import NavbarLinks from "./components/NavbarLinks";
-import NavbarSearch from "./components/NavbarSearch";
-import NavbarProfileDropdown from "./components/NavbarProfileDropdown";
 import { auth } from "@/lib/auth";
-import NavbarMobileMenu from "./components/NavbarMobileMenu";
 import NavbarCartButtonWrapper from "./components/NavbarCartButtonWrapper";
+import NavbarLinks from "./components/NavbarLinks";
+import NavbarLogo from "./components/NavbarLogo";
+import NavbarMobileMenu from "./components/NavbarMobileMenu";
+import NavbarProfileDropdown from "./components/NavbarProfileDropdown";
+import NavbarSearch from "./components/NavbarSearch";
 
 const Header = async () => {
   const session = await auth();

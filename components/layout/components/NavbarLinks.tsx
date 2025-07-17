@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 
 const NavbarLinks = () => {
   const pathname = usePathname();
-  const { toggle } = useSheetStore();
+  const { close } = useSheetStore();
 
   return (
     <ul className="flex flex-col md:flex-row lg:items-center gap-5 md:gap-10">
@@ -17,7 +17,7 @@ const NavbarLinks = () => {
         return (
           <li
             key={link.href}
-            onClick={toggle}
+            onClick={close}
             className="font-semibold text-gray-700"
           >
             <Link

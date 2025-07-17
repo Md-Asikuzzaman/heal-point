@@ -24,7 +24,11 @@ export const footerSections = [
 ];
 
 export const socialLinks = [
-  { label: "Facebook", icon: FaFacebookF, href: "#" },
+  {
+    label: "Facebook",
+    icon: FaFacebookF,
+    href: "https://www.facebook.com/vitaledgepharmacybd",
+  },
   { label: "Instagram", icon: FaInstagram, href: "#" },
   { label: "Twitter", icon: FaTwitter, href: "#" },
   { label: "Youtube", icon: FaYoutube, href: "#" },
@@ -32,6 +36,7 @@ export const socialLinks = [
 
 export const contactInfo = {
   address: "Khulna, Bangladesh",
-  phone: "+8801618883013",
-  email: "renixcare@gmail.com",
+  phone: "+8801920643310",
+  whatsapp: "+8801732936482",
+  email: "vitaledgepharmacybd@gmail.com",
 };
