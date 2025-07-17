@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ProjectDetailsCard from "../_components/ProjectDetailsCard";
 
+export const revalidate = 60;
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SITE_URL}/api/products/${slug}`,
     {
-      cache: "no-cache",
+      next: { revalidate: 60 },
     }
   );
 
