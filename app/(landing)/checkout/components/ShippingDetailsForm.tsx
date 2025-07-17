@@ -43,7 +43,6 @@ const ShippingDetailsForm = ({ defaultValues }: Props) => {
 
   function onSubmit(values: z.infer<typeof orderFormSchema>) {
     try {
-
       if (cart.length > 0) {
         startTransition(async () => {
           const res = await createOrderAction({ ...values, items: cart });
@@ -69,14 +68,14 @@ const ShippingDetailsForm = ({ defaultValues }: Props) => {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-6 md:p-8 border border-green-100">
+    <div className="bg-white shadow-md rounded-xl p-6 lg:p-8 border border-green-100">
       <h2 className="text-2xl font-bold text-green-700 mb-6">
         Shipping Details
       </h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 max-w-3xl mx-auto py-10 bg-white p-5"
+          className="space-y-4 max-w-3xl mx-auto bg-white"
           method="POST"
         >
           <FormField
@@ -163,7 +162,9 @@ const ShippingDetailsForm = ({ defaultValues }: Props) => {
           <div className="my-6 lg:my-8 space-y-3">
             {isLoggedIn ? (
               <OrderPlaceButton
-                text="Place Order (Cash on Delivery)"
+                text="Place Order"
+                mdText="Place Order (COD)"
+                lgText="Place Order (Cash on Delivery)"
                 cart={cart}
                 isPending={isPending}
                 className="bg-green-600 hover:bg-green-700"
@@ -171,7 +172,9 @@ const ShippingDetailsForm = ({ defaultValues }: Props) => {
             ) : (
               <>
                 <OrderPlaceButton
-                  text="Place Order without login (Cash on Delivery)"
+                  text="Place Order without login"
+                  mdText="Place Order without login (COD)"
+                  lgText="Place Order without login (Cash on Delivery)"
                   cart={cart}
                   isPending={isPending}
                   className="bg-orange-600 hover:bg-orange-700"

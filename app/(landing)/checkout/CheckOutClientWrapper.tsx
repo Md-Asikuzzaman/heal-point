@@ -19,7 +19,7 @@ interface Props {
 
 const CheckOutClientWrapper = ({ defaultValues }: Props) => {
   return (
-    <section className="w-full py-10 px-4">
+    <section className="w-full py-10 px-2 md:px-4">
       <Container className="grid md:grid-cols-2 gap-10">
         {/* Left: Shipping Form */}
         <ShippingDetailsForm defaultValues={defaultValues} />

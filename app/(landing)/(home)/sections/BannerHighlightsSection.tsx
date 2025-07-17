@@ -31,7 +31,7 @@ const BannerHighlights = () => {
   ];
 
   return (
-    <section className="my-12 px-4">
+    <section className="my-12 px-2 md:px-4">
       <Container className="bg-green-50 py-10 px-6 sm:px-10 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 px-6 py-8">
           {items.map(({ icon: Icon, title, subtitle }, index) => (

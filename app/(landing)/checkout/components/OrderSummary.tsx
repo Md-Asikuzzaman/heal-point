@@ -8,7 +8,7 @@ const OrderSummary = () => {
   const { cart, getTotalPrice } = useCartStore();
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-6 md:p-8 border border-orange-100 h-fit">
+    <div className="bg-white shadow-md rounded-xl p-6 lg:p-8 border border-orange-100 h-fit">
       <h2 className="text-xl font-bold text-orange-600 mb-6">Order Summary</h2>
 
       {/* Products */}

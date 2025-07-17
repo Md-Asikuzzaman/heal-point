@@ -3,7 +3,7 @@ import CategorySection from "./sections/CategorySection";
 import ProductSection from "./sections/ProductSection";
 import SliderSection from "./sections/SliderSection";
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <SliderSection />

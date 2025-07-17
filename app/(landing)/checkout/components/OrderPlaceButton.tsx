@@ -7,12 +7,16 @@ import { NextPage } from "next";
 
 interface Props extends React.ComponentProps<"button"> {
   text: string;
+  mdText?: string;
+  lgText?: string;
   isPending: boolean;
   cart: CartProductType[];
 }
 
 const OrderPlaceButton: NextPage<Props> = ({
   text,
+  mdText,
+  lgText,
   isPending,
   cart,
   className,
@@ -35,7 +39,11 @@ const OrderPlaceButton: NextPage<Props> = ({
           Order Placing...
         </span>
       ) : (
-        text
+        <>
+          <span className="md:hidden">{text}</span>
+          <span className="hidden md:inline">{mdText}</span>
+          <span className="hidden lg:inline">{lgText}</span>
+        </>
       )}
     </Button>
   );

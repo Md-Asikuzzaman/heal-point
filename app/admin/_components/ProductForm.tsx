@@ -245,7 +245,7 @@ const ProductForm = ({ product }: Props) => {
 
           <SubmitButton
             text={product ? "Update Product" : "Add Product"}
-            loadingText={product ? "Updating..." : "Adding..."}
+            loadingText={product ? "Product Updating..." : "Product Adding..."}
             isPending={addOrderPending || updateOrderPending}
           />
         </form>

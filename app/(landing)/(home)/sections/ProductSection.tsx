@@ -5,6 +5,8 @@ import { Product } from "@prisma/client";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
+export const revalidate = 60;
+
 type ProductsApiResponse = {
   success: boolean;
   data: Product[];
@@ -12,12 +14,12 @@ type ProductsApiResponse = {
 
 const ProductSection = async () => {
   const res = await fetch("http://localhost:3000/api/products", {
-    cache: "no-cache",
+    next: { revalidate: 60 },
   });
   const products: ProductsApiResponse = await res.json();
 
   return (
-    <section className="mt-12 px-4">
+    <section className="mt-12 px-2 md:px-4">
       <Container className="bg-white py-10 px-6 sm:px-10 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
         <div className="flex flex-col md:flex-row items-center justify-between border-b border-muted pb-2 mb-4">
           <Heading text="Unani & Natural Products" />

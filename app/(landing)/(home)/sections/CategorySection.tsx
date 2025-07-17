@@ -7,7 +7,7 @@ import { CategoryCard } from "../components/CategoryCard";
 
 const CategorySection = () => {
   return (
-    <section className="mt-12 px-4">
+    <section className="mt-12 px-2 md:px-4">
       <Container className="bg-white py-10 px-6 sm:px-10 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
         <Heading text="Shop By Natural Product Category" />
 
