@@ -1,19 +1,25 @@
 "use client";
 
 import { navLinks } from "@/constants/navLinks";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useSheetStore } from "@/store/useSheetStore";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NavbarLinks = () => {
   const pathname = usePathname();
+  const { toggle } = useSheetStore();
 
   return (
-    <ul>
-      <li className="flex flex-col md:flex-row lg:items-center gap-3 md:gap-10 font-semibold text-gray-700">
-        {navLinks.map((link) => {
-          const isActive = pathname === link.href;
-          return (
+    <ul className="flex flex-col md:flex-row lg:items-center gap-5 md:gap-10">
+      {navLinks.map((link) => {
+        const isActive = pathname === link.href;
+        return (
+          <li
+            key={link.href}
+            onClick={toggle}
+            className="font-semibold text-gray-700"
+          >
             <Link
               key={link.title}
               href={link.href}
@@ -30,9 +36,9 @@ const NavbarLinks = () => {
             >
               {link.title}
             </Link>
-          );
-        })}
-      </li>
+          </li>
+        );
+      })}
     </ul>
   );
 };

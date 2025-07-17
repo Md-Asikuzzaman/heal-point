@@ -1,13 +1,18 @@
+"use client";
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import React from "react";
 import NavbarLinks from "./NavbarLinks";
 import NavbarSearch from "./NavbarSearch";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useSheetStore } from "@/store/useSheetStore";
 
 const NavbarMobileMenu = () => {
+  const { isOpen, toggle } = useSheetStore();
+
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={toggle}>
       <SheetTrigger>
         <Menu className="w-6 h-6 text-gray-700" />
       </SheetTrigger>
