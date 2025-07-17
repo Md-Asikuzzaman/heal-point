@@ -16,6 +16,8 @@ export default async function Layout({
     return redirect("/api/auth/signin?callbackUrl=/admin");
   }
 
+  console.log(session.user?.role);
+
   return (
     <SidebarProvider>
       <AppSidebar />
