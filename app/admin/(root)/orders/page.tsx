@@ -4,7 +4,7 @@ import OrderTable from "../../_components/OrderTable";
 export default function OrdersPage() {
   return (
     <Card>
-      <CardHeader>Order Table</CardHeader>
+      <CardHeader>Orders Table</CardHeader>
       <CardContent>
         <OrderTable />
       </CardContent>

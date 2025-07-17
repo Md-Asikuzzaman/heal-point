@@ -1,7 +1,21 @@
+export const dynamic = "force-dynamic";
+
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./_components/app-sidebar";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
+
+  if (!session || session?.user?.role !== "admin") {
+    redirect("/api/auth/signin?callbackUrl=/admin");
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />

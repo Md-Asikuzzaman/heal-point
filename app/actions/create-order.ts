@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function createOrderAction(data: {
   fullName: string;
@@ -39,6 +40,8 @@ export async function createOrderAction(data: {
         message: "Something went wrong, please try again later.",
       };
     }
+
+    revalidatePath("/admin");
 
     return {
       success: true,

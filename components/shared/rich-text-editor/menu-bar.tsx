@@ -17,7 +17,7 @@ import {
   Strikethrough,
   Underline,
 } from "lucide-react";
-import { Toggle } from "../ui/toggle";
+import { Toggle } from "../../ui/toggle";
 
 const MenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {

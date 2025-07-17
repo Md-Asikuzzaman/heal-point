@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import RichTextEditor from "@/components/rich-text-editor";
+import RichTextEditor from "@/components/shared/rich-text-editor";
 import {
   Form,
   FormControl,
