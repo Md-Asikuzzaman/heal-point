@@ -14,7 +14,10 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-// GET Request - Returns a list of products
+/**
+ * @route GET /api/products/search?q={query}
+ * @desc Search for products
+ */
 export async function GET(
   request: Request
 ): Promise<NextResponse<ApiResponse<SearchProduct[]>>> {
@@ -38,11 +41,14 @@ export async function GET(
       },
     });
 
-    return NextResponse.json({ success: true, data: products });
-  } catch (error: unknown) {
-    console.error(error);
     return NextResponse.json(
-      { success: false, error: "Failed to fetch products" },
+      { success: true, data: products },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("[PRODUCT_GET_ERROR]", error);
+    return NextResponse.json(
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
   }

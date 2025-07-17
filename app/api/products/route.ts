@@ -19,15 +19,17 @@ interface ApiResponse<T> {
 export async function POST(
   req: NextRequest
 ): Promise<NextResponse<ApiResponse<Product>>> {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json(
-      { success: false, error: "Unauthorized access." },
-      { status: 401 }
-    );
-  }
-
   try {
+    // Check authentication
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized access." },
+        { status: 401 }
+      );
+    }
+
+    // Validate Product
     const body = await req.json();
     const result = productSchema.safeParse(body);
 
@@ -55,7 +57,7 @@ export async function POST(
       },
     });
 
-    return NextResponse.json({ success: true, data: product }, { status: 200 });
+    return NextResponse.json({ success: true, data: product }, { status: 201 });
   } catch (error) {
     console.error("[PRODUCT_POST_ERROR]", error);
     return NextResponse.json(

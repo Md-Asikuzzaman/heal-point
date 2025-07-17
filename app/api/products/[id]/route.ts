@@ -1,11 +1,11 @@
-import { productSchema } from "@/app/admin/_components/ProductForm";
+import { auth } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
 import { prisma } from "@/lib/prisma";
+import { productSchema } from "@/schema";
 import { getPublicIdFromUrl } from "@/utils/cloudinary";
 import { Product } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import slugify from "slugify";
-import z from "zod";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -13,116 +13,148 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-// Define the expected URL params type
 interface Params {
   params: Promise<{ id: string }>;
 }
 
-// DELETE API Endpoint
+/**
+ * @route DELETE /api/products/{id}
+ * @desc Delete a product
+ */
 export async function DELETE(
   req: NextRequest,
   ctx: Params
 ): Promise<NextResponse<ApiResponse<null>>> {
   try {
-    const { id } = await ctx.params;
+    // Check authentication
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized access." },
+        { status: 401 }
+      );
+    }
 
-    const product = await prisma.product.findUnique({
-      where: { id: id },
+    // Validate product ID
+    const { id: productId } = await ctx.params;
+    if (!productId) {
+      return NextResponse.json(
+        { success: false, error: "Product ID is required." },
+        { status: 400 }
+      );
+    }
+
+    // Find the product
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: productId },
     });
 
-    if (!product) {
+    if (!existingProduct) {
       return NextResponse.json(
-        { success: false, error: "Product not found" },
+        { success: false, error: "Product not found." },
         { status: 404 }
       );
     }
 
-    // 1. Get publicId from Cloudinary image URL
-    const publicId = getPublicIdFromUrl(product.image);
+    // Delete image from Cloudinary
+    const publicId = getPublicIdFromUrl(existingProduct.image);
     if (publicId) {
-      // 2. Delete image from Cloudinary
       await cloudinary.uploader.destroy(publicId);
     }
 
-    await prisma.product.delete({ where: { id } });
+    // Delete product from DB
+    await prisma.product.delete({ where: { id: productId } });
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.error("[PRODUCT_DELETE_ERROR]", error);
     return NextResponse.json(
-      { success: false, error: "Failed to process request" },
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
   }
 }
 
-type ProductSchema = z.infer<typeof productSchema>;
-
-// UPDATE API Endpoint
+/**
+ * @route PATCH /api/products/{id}
+ * @desc Update a product
+ */
 export async function PATCH(
   req: NextRequest,
   ctx: Params
 ): Promise<NextResponse<ApiResponse<Product>>> {
   try {
-    const { id } = await ctx.params;
-    const data: ProductSchema = await req.json();
-
-    const product = await prisma.product.findUnique({ where: { id } });
-    if (!product) {
+    // Check authentication
+    const session = await auth();
+    if (!session?.user?.email) {
       return NextResponse.json(
-        { success: false, error: "Product not found" },
+        { success: false, error: "Unauthorized access." },
+        { status: 401 }
+      );
+    }
+
+    // Validate Product
+    const body = await req.json();
+    const result = productSchema.safeParse(body);
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: "Invalid product data." },
+        { status: 400 }
+      );
+    }
+
+    const data = result.data;
+    const { id: productId } = await ctx.params;
+
+    if (!productId) {
+      return NextResponse.json(
+        { success: false, error: "Missing product ID." },
+        { status: 400 }
+      );
+    }
+
+    // Find the product
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!existingProduct) {
+      return NextResponse.json(
+        { success: false, error: "Product not found." },
         { status: 404 }
       );
     }
 
-    // Extract old public_id to delete old image
-    const oldPublicId = getPublicIdFromUrl(product.image);
+    // Prepare new slug & image
+    const slug = slugify(data.title, { lower: true, strict: true });
+    const oldImagePublicId = getPublicIdFromUrl(existingProduct.image);
 
-    // Upload new base64 image to Cloudinary
+    // Upload new image
     const uploaded = await cloudinary.uploader.upload(data.image, {
       folder: "products",
     });
 
-    // Delete old image from Cloudinary if possible
-    if (oldPublicId) {
-      await cloudinary.uploader.destroy(oldPublicId);
+    // Delete old image
+    if (oldImagePublicId) {
+      await cloudinary.uploader.destroy(oldImagePublicId);
     }
 
-    // Update product with new image URL & other data
-    const updatedProduct = await prisma.product.update({
-      where: { id },
+    // Update product
+    const updated = await prisma.product.update({
+      where: { id: productId },
       data: {
         ...data,
-        image: uploaded.secure_url, // store new URL, not base64
+        slug,
+        image: uploaded.secure_url,
       },
     });
 
-    return NextResponse.json(
-      { success: true, data: updatedProduct },
-      { status: 200 }
-    );
+    return NextResponse.json({ success: true, data: updated }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.error("[PRODUCT_PATCH_ERROR]", error);
     return NextResponse.json(
-      { success: false, error: "Failed to process request" },
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
-  }
-}
-
-export async function GET(req: NextRequest, ctx: Params) {
-  try {
-    const { id } = await ctx.params;
-    const slug = slugify(id, { lower: true, strict: true });
-
-    const product = await prisma.product.findFirst({
-      where: {
-        slug,
-      },
-    });
-
-    return NextResponse.json({ success: true, data: product }, { status: 200 });
-  } catch (error) {
-    console.log(error);
   }
 }
