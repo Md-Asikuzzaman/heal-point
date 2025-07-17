@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data: product }: ProductApiResponse = await res.json();
 
   if (!product) {
-    redirect("/products");
+    return redirect("/products");
   }
 
   return {

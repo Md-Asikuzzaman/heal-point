@@ -13,7 +13,7 @@ export default async function Layout({
   const session = await auth();
 
   if (!session || session?.user?.role !== "admin") {
-    redirect("/api/auth/signin?callbackUrl=/admin");
+    return redirect("/api/auth/signin?callbackUrl=/admin");
   }
 
   return (
