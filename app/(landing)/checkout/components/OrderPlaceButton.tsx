@@ -41,7 +41,7 @@ const OrderPlaceButton: NextPage<Props> = ({
       ) : (
         <>
           <span className="md:hidden">{text}</span>
-          <span className="hidden md:inline">{mdText}</span>
+          <span className="hidden md:inline lg:hidden">{mdText}</span>
           <span className="hidden lg:inline">{lgText}</span>
         </>
       )}

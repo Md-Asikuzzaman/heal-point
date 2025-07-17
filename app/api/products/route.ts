@@ -1,4 +1,5 @@
 import { productSchema } from "@/app/admin/_components/ProductForm";
+import cloudinary from "@/lib/cloudinary";
 import { prisma } from "@/lib/prisma";
 import { Product } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
@@ -22,9 +23,14 @@ export async function POST(
     const data: ProductSchema = await req.json();
     const slug = slugify(data.title, { lower: true, strict: true });
 
+    const uploaded = await cloudinary.uploader.upload(data.image, {
+      folder: "products",
+    });
+
     const product = await prisma.product.create({
       data: {
         ...data,
+        image: uploaded.secure_url,
         slug,
       },
     });
