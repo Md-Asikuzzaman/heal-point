@@ -17,8 +17,6 @@ const ProjectDetailsCard = (product: Product) => {
     medicineQuantity,
   } = product;
 
-  console.log(title);
-
   return (
     <section className="w-full py-10 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10 border border-green-100 space-y-5">

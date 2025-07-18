@@ -19,9 +19,9 @@ export async function GET(): Promise<NextResponse<ApiResponse<Order[]>>> {
 
     return NextResponse.json({ success: true, data: orders }, { status: 200 });
   } catch (error: unknown) {
-    console.log(error);
+    console.log("", error);
     return NextResponse.json(
-      { success: false, error: "Failed to fetch users" },
+      { success: false, error: "Internal server error" },
       { status: 500 }
     );
   }

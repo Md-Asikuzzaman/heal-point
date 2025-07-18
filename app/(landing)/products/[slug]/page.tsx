@@ -27,7 +27,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data: product }: ProductApiResponse = await res.json();
 
   if (!product) {
-    return redirect("/products");
+    return {
+      title: "Product not found",
+      description: "Product not found",
+    };
   }
 
   return {
@@ -60,7 +63,7 @@ export default async function ProductDetailsPage({ params }: Props) {
 
   const product: ProductApiResponse = await res.json();
 
-  if (!product) {
+  if (!product.success) {
     redirect("/products");
   }
 

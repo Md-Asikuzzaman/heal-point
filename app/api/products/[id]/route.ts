@@ -158,3 +158,33 @@ export async function PATCH(
     );
   }
 }
+
+/**
+ * @route GET /api/products/{slug}
+ * @desc Get a product
+ */
+export async function GET(
+  req: NextRequest,
+  ctx: Params
+): Promise<NextResponse<ApiResponse<Product>>> {
+  try {
+    const { id: slug } = await ctx.params;
+
+    const product = await prisma.product.findFirst({ where: { slug } });
+
+    if (!product) {
+      return NextResponse.json(
+        { success: false, error: "Product not found." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ success: true, data: product }, { status: 200 });
+  } catch (error) {
+    console.error("[PRODUCT_GET_BY_ID_ERROR]", error);
+    return NextResponse.json(
+      { success: false, error: "Internal server error." },
+      { status: 500 }
+    );
+  }
+}
