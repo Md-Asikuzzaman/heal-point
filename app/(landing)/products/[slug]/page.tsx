@@ -2,6 +2,7 @@ import { Product } from "@prisma/client";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ProjectDetailsCard from "../_components/ProjectDetailsCard";
+import { prisma } from "@/lib/prisma";
 
 export const revalidate = 60;
 interface Props {
@@ -12,6 +13,17 @@ type ProductApiResponse = {
   success: boolean;
   data: Product;
 };
+
+export async function generateStaticParams() {
+  const products = await prisma.product.findMany({
+    select: { slug: true },
+    take: 10,
+  });
+
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
+}
 
 // generateMetadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
