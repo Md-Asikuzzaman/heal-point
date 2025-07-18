@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./_components/app-sidebar";
 import { auth } from "@/lib/auth";
@@ -15,8 +13,6 @@ export default async function Layout({
   if (!session) {
     return redirect("/api/auth/signin?callbackUrl=/admin");
   }
-
-  console.log(session.user?.role);
 
   return (
     <SidebarProvider>
