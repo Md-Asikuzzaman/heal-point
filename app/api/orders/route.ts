@@ -8,7 +8,10 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-// GET Request - Returns a list of orders
+/**
+ * @route GET /api/orders
+ * @desc Get all orders
+ */
 export async function GET(): Promise<NextResponse<ApiResponse<Order[]>>> {
   try {
     const orders = await prisma.order.findMany({
@@ -18,8 +21,9 @@ export async function GET(): Promise<NextResponse<ApiResponse<Order[]>>> {
     });
 
     return NextResponse.json({ success: true, data: orders }, { status: 200 });
-  } catch (error: unknown) {
-    console.log("", error);
+  } catch (error) {
+    console.error("[ORDERS_GET_ERROR]", error);
+
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
