@@ -1,16 +1,15 @@
 "use client";
 
-import React from "react";
 import Slider from "react-slick";
-import Image from "next/image";
 
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 
 import slide1 from "@/public/images/slide1.jpeg";
 import slide2 from "@/public/images/slide2.webp";
 import slide3 from "@/public/images/slide3.jpeg";
 import slide4 from "@/public/images/slide4.jpeg";
+import SlideItem from "../components/SliderItem";
 
 const slides = [
   {
@@ -49,20 +48,15 @@ const SliderSection = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    fade: true, // 👈 add this
-    cssEase: "linear", // 👈 optional for smoother fade
+    fade: true,
+    cssEase: "linear",
   };
 
   return (
-    <section className="w-full bg-white overflow-clip">
+    <section className="w-full bg-gray-200 overflow-clip min-h-[300px]">
       <Slider {...settings}>
-        {slides.map(({ id, title, image }) => (
-          <div
-            key={id}
-            className="relative w-full aspect-[8/3] md:aspect-[12/3] bg-white flex items-center justify-center"
-          >
-            <Image src={image} alt={title} fill priority sizes="100vw" />
-          </div>
+        {slides.map(({ id, title, subtitle, image }) => (
+          <SlideItem key={id} image={image} title={title} subtitle={subtitle} />
         ))}
       </Slider>
     </section>
