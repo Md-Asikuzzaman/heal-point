@@ -110,7 +110,8 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="bg-green-950 text-center py-4 text-sm text-gray-300 border-t border-green-800">
-        &copy; {new Date().getFullYear()} Unani Store. All rights reserved.
+        &copy; {new Date().getFullYear()} VitalEdge Pharmacy. All rights
+        reserved.
       </div>
     </footer>
   );

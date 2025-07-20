@@ -10,7 +10,7 @@ export default function SexualWellnessPage() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-green-200 to-green-50 px-4">
       <div className="max-w-xl text-center p-8 bg-white shadow-xl rounded-xl border border-green-200">
-        <h1 className="text-4xl font-bold text-green-700 mb-4 animate-bounce">
+        <h1 className="text-xl md:text-4xl font-bold text-green-700 mb-4 animate-bounce">
           🚧 Coming Soon 🚧
         </h1>
         <p className="text-lg text-gray-600 mb-6">
@@ -22,7 +22,7 @@ export default function SexualWellnessPage() {
 
         <div className="flex items-center justify-center gap-2 text-green-700 font-semibold text-sm mb-4">
           <Clock className="w-5 h-5 animate-pulse" />
-          Expected Launch:{" "}
+          Expected Launch:
           <span className="ml-1 font-bold">Coming This Month</span>
         </div>
 

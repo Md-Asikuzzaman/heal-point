@@ -8,8 +8,8 @@ export const footerSections = [
     links: [
       { label: "Home", href: "/" },
       { label: "Shop", href: "/products" },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "About", href: "#" },
+      { label: "Contact", href: "#" },
     ],
   },
   {

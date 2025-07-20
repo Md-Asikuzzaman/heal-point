@@ -60,6 +60,16 @@ const NavbarProfileDropdown = ({ session }: Props) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-56" align="end">
+        {session && (
+          <DropdownMenuGroup className="px-3 py-2 space-y-0.5">
+            <h4 className="text-sm font-semibold text-gray-800 line-clamp-1">
+              {session?.user?.name}
+            </h4>
+            <h5 className="text-xs text-gray-500 truncate max-w-[200px] line-clamp-1">
+              {session?.user?.email}
+            </h5>
+          </DropdownMenuGroup>
+        )}
         <DropdownMenuLabel className="px-3 py-2">My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem className="px-3 py-2 cursor-pointer">

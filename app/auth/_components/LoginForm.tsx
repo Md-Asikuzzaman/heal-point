@@ -74,7 +74,7 @@ const LoginForm = () => {
   }
 
   const handleGoogleLogin = () => {
-    // TODO: Add Google login logic
+    signIn("google", { callbackUrl });
   };
 
   return (

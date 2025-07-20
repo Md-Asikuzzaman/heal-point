@@ -1,9 +1,10 @@
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "./prisma";
-import Credentials from "next-auth/providers/credentials";
 import { loginSchema } from "@/schema";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { prisma } from "./prisma";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -44,6 +45,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           role: user.role,
         };
       },
+    }),
+
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
 
