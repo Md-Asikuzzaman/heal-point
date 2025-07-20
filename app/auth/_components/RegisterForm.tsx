@@ -20,18 +20,22 @@ import {
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import z from "zod";
 import SubmitButton from "./SubmitButton";
+import { signIn } from "next-auth/react";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -64,7 +68,7 @@ const RegisterForm = () => {
   }
 
   const handleGoogleRegister = () => {
-    // TODO: Trigger Google signup
+    signIn("google", { callbackUrl });
   };
 
   return (
