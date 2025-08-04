@@ -35,6 +35,8 @@ A modern pharmacy web application built with **Next.js App Router**, **Prisma**,
 ## 🔑 Admin Credentials
 
 > Use the following credentials to access the **Admin Panel**.
+> 
+🔗 **Dashboard:** [https://heal-point-pharma.vercel.app/admin](https://heal-point-pharma.vercel.app/admin)
 
 ```bash
 🔐 Email: admin@gmail.com
