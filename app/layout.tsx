@@ -15,28 +15,13 @@ export const metadata: Metadata = {
     template: "%s - Heal point",
   },
   description: "Heal point",
-  keywords: "Heal point, Heal point, Heal point",
+  keywords: "Heal point, Online Pharma, Heal point pharmacy",
   robots: "index, follow",
-  // Open-Graph for social site
-  openGraph: {
-    type: "website",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
-    locale: "en_US",
-    siteName: "Heal point",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.png`,
-        width: 1200,
-        height: 630,
-        alt: "Heal point",
-      },
-    ],
-  },
+
   // Open-Graph for twitter
   twitter: {
     card: "summary_large_image",
   },
-
   icons: [
     {
       rel: "icon",
