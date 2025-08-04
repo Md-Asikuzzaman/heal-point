@@ -45,7 +45,7 @@ export async function POST(
 
     // Upload Image to Cloudinary
     const uploaded = await cloudinary.uploader.upload(data.image, {
-      folder: "products",
+      folder: "heal-point",
     });
 
     // Save Product to Database

@@ -11,24 +11,24 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "VitalEdge Pharmacy",
-    template: "%s - VitalEdge Pharmacy",
+    default: "Heal point",
+    template: "%s - Heal point",
   },
-  description: "VitalEdge Pharmacy",
-  keywords: "VitalEdge Pharmacy, VitalEdge Pharmacy, VitalEdge Pharmacy",
+  description: "Heal point",
+  keywords: "Heal point, Heal point, Heal point",
   robots: "index, follow",
   // Open-Graph for social site
   openGraph: {
     type: "website",
     url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
     locale: "en_US",
-    siteName: "VitalEdge Pharmacy",
+    siteName: "Heal point",
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.jpg`,
         width: 1200,
         height: 630,
-        alt: "VitalEdge Pharmacy",
+        alt: "Heal point",
       },
     ],
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URL}`),
   authors: [
     {
-      name: "VitalEdge Pharmacy",
+      name: "Heal point",
       url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
     },
   ],

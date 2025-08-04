@@ -131,7 +131,7 @@ export async function PATCH(
 
     // Upload new image
     const uploaded = await cloudinary.uploader.upload(data.image, {
-      folder: "products",
+      folder: "heal-point",
     });
 
     // Delete old image

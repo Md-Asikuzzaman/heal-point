@@ -1,5 +1,3 @@
-// constants/footerData.ts
-
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 export const footerSections = [
@@ -27,16 +25,16 @@ export const socialLinks = [
   {
     label: "Facebook",
     icon: FaFacebookF,
-    href: "https://www.facebook.com/vitaledgepharmacybd",
+    href: "/#",
   },
-  { label: "Instagram", icon: FaInstagram, href: "#" },
-  { label: "Twitter", icon: FaTwitter, href: "#" },
-  { label: "Youtube", icon: FaYoutube, href: "#" },
+  { label: "Instagram", icon: FaInstagram, href: "/#" },
+  { label: "Twitter", icon: FaTwitter, href: "/#" },
+  { label: "Youtube", icon: FaYoutube, href: "/#" },
 ];
 
 export const contactInfo = {
-  address: "Khulna, Bangladesh",
-  phone: "+8801920643310",
-  whatsapp: "+8801732936482",
-  email: "vitaledgepharmacybd@gmail.com",
+  address: "Dhaka, Bangladesh",
+  phone: "+8801XXXXXXXXX",
+  whatsapp: "+8801XXXXXXXX",
+  email: "healpoint@support.com",
 };
