@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Heal point",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.jpg`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.png`,
         width: 1200,
         height: 630,
         alt: "Heal point",
